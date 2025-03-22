@@ -1,0 +1,50 @@
+services:
+  panel:
+    container_name: pwa_panel
+    build: ./panel
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+    networks:
+      - net_pwa
+
+  api:
+    container_name: pwa_api
+    build: ./api
+    ports:
+      - "5000:5000"
+    environment:
+      - DB_HOST=db
+      - DB_USER=${MYSQL_USER}
+      - DB_PASSWORD=${MYSQL_PASSWORD}
+      - DB_NAME=${MYSQL_DATABASE}
+      - DB_PORT=3306
+    depends_on:
+      - db
+    networks:
+      - net_pwa
+
+  db:
+    container_name: pwa_db
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3307:3306"
+    volumes:
+      - db-data:/var/lib/mysql
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - net_pwa
+
+networks:
+  net_pwa:
+    driver: bridge
+
+volumes:
+  db-data:
