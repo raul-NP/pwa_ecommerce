@@ -7,7 +7,7 @@
 }
 
 .header{
-    height: 18vh;
+    height: 25vh;
     width: 100vw;
     display: flex;
     flex-direction: column;
@@ -25,19 +25,31 @@
 
 .contain{
     width: 100vw;
-    height: 72vh;
+    height: 75vh;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .logo{
-
+    background-color: var(--secondary);
+    width: 12vh;
+    height: 12vh;
+    position: absolute;
+    border: 2px solid var(--tertiary);
+    border-radius: 50%;
+    top: -6vh;
+    display: flex;
+    justify-content: center;
 }
 
 .secondary-card{
     background-color: var(--secondary);
-    height: 30vh;
     border: 2px solid var(--tertiary);
     border-radius: 10px;
+    width: 80vw;
+    height: 60vh;
 }
 
 .button{

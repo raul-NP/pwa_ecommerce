@@ -12,25 +12,34 @@ import './Login.css'
 // Componente general Login
 function Login ({signUp}) {
     return (
+
+        // Pantalla completa
         <div className='principal-card'>
 
+            {/* Título */}
             <div className='header'>
                 <h1 className='tittle'>DE LYSÉANT</h1>
                 <img src={downLine} width='200vw' />
             </div>
 
+            {/* Contenido */}
             <div className='contain'>
 
+                {/* Logo */}
                 <div className='logo'>
-                    <img src="" alt="" />
+                    <img src={logo} width='65vh'/>
                 </div>
 
+                {/* Formulario */}
                 <div className='secondary-card'>
 
                 </div>
 
-                {signUp && <Button width={'100px'}></Button>}
-                {!signUp && <Button width={'100px'}></Button>}
+                {/* Botón */}
+                <div className='button'>
+                    {!signUp && <Button width={'30vw'} height={'5vh'}></Button>}
+                    {signUp && <Button width={'100vw'}></Button>}
+                </div>
             </div>
 
         </div>
