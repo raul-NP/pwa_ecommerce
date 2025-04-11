@@ -15,12 +15,18 @@
     justify-content: center;
 }
 
+.header > img{
+    width: 26vh;
+}
+
 .tittle{
     font-family: 'Cormorant Garamond', serif;
     font-weight: 300;
     font-style: italic;
     text-align: center;
     color: var(--tertiary);
+    font-size: 4vh;
+
 }
 
 .contain{
@@ -30,6 +36,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 2vh;
 }
 
 .logo{
@@ -37,21 +44,91 @@
     width: 12vh;
     height: 12vh;
     position: absolute;
-    border: 2px solid var(--tertiary);
+    border: 0.3vh solid var(--tertiary);
     border-radius: 50%;
     top: -6vh;
     display: flex;
     justify-content: center;
 }
 
+.logo > img{
+    width: 7vh;
+}
+
 .secondary-card{
     background-color: var(--secondary);
-    border: 2px solid var(--tertiary);
-    border-radius: 10px;
+    border: 0.3vh solid var(--tertiary);
+    border-radius: 1vh;
     width: 80vw;
     height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.input-container{
+    border-bottom: 0.3vh solid var(--tertiary);
+    width: 60vw;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-bottom: 0.3vh;
+    margin: 2.5vh 
+}
+
+#user{
+    width: 2vh;
+    margin-right: 1.2vh;
+}
+#password{
+    width: 2.8vh;
+    margin-left: -0.3vh;
+    margin-right: 0.7vh;
+}
+#password2{
+    width: 3.2vh;
+    margin-left: -0.2vh;
+    margin-right: 0.2vh;
+}
+
+.inputs{
+    background-color: var(--secondary);
+    border: none;
+    outline: none;
+    box-shadow: none;
+    color: var(--tertiary);
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-style: italic;
+    letter-spacing: 0.2vw;
+    padding: 0.8vh;
+    font-size: 2vh;
+}
+
+.inputs::placeholder {
+    color: var(--tertiary);
+    opacity: 0.7; 
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-style: italic;
+    letter-spacing: 0.2vw;
+    font-size: 1.8vh;
+}
+
+a{
+    color: var(--tertiary); 
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-style: italic;
+    position: absolute;
+    bottom: 22vh;
+    font-size: 1.7vh;
+    letter-spacing: 0.075vh;
 }
 
 .button{
-
+    position: absolute;
+    bottom: 11vh;
+    cursor: pointer;
 }
