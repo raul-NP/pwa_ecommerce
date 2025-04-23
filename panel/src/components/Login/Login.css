@@ -93,6 +93,7 @@
 }
 #view{
     width: 2.3vh;
+    cursor: pointer;
 }
 
 .inputs{

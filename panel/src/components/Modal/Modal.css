@@ -1,0 +1,52 @@
+.container{
+    animation-name: appear;
+    animation-duration: 3s;
+
+    right: 1vw;
+    opacity: 1;
+    top: 1.5vw;
+    background-color: var(--secondary);
+    border: 0.2vh solid var(--tertiary);
+    border-radius: 1vh;
+    position: absolute;
+    width: 25vh;
+    height: 5vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    padding-left: 2vh;
+    padding-right: 2vh;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+}
+h1{
+    font-size: 1.7vh;
+    color: var(--tertiary);
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-style: bold;
+}
+img{
+    width: 2.5vh;
+}
+
+@keyframes appear {
+    0%{
+        right: -60vw;
+        opacity: 0.5;
+    }
+    50%{
+        right: 1.5vw;
+        opacity: 1;
+    }
+    80%{
+        right: 1.5vw;
+        opacity: 1;
+    }
+    100%{
+        right: 1.5vw;
+        opacity: 0;
+    }
+}

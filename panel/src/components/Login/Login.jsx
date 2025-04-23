@@ -1,6 +1,7 @@
 // Componentes
 import Button from '../Button/Button'
 import PasswordInput from '../PasswordInput/PasswordInput';
+import Modal from '../Modal/Modal';
 
 // Imagenes
 import logoSvg from '../../assets/imgs/logo.svg';
@@ -8,6 +9,7 @@ import downLineSvg from '../../assets/imgs/down_line.svg';
 import userSvg from '../../assets/imgs/user.svg';
 import passwordSvg from '../../assets/imgs/password.svg';
 import password2Svg from '../../assets/imgs/password_2.svg';
+import { checkUser, getUsers } from '../../services/api_service';
 
 // Fuentes y estilos
 import '../../styles/fonts.css'
@@ -16,54 +18,138 @@ import './Login.css'
 
 // Funcionalidades
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom'
 
 // Componente general Login
 function Login ({signIn}) {
 
+    // Credenciales
     const [user, setUser] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
-    const API_URL = import.meta.env.VITE_API_URL;
 
-    // Función para recoger los usuarios de la aplicación
-    async function getUsers() {
-        return await fetch(`${API_URL}/api/users`)
-        .then(response => {
-            return response.json();
-        })
-    }
+    // Navegación
+    const navigate = useNavigate()
+
+    // Modales
+    const [existModal, setExistModal] = useState(false)
+    const [passwordModal, setPasswordModal] = useState(false)
+    const [successModal, setSuccessModal] = useState(false)
+    const [incorrectModal, setIncorrectModal] = useState(false)
 
     // Función para registrar el usuario
     async function signUp(e) {
-        
+                
+        // Campos rellenos
         if (user && password && confirmPassword){
-
-            // Evitamos la animación de vaciado de campos
+            
+            // Evitar que al pulsar el boton se vacíen los campos
             e.preventDefault()
+            
+            // Evitar sobrecarga de clics
+            if (existModal || passwordModal || successModal) return;
 
             // Recogemos los usuarios de la aplicación
             const users = await getUsers()
-
             console.log(users);
-            
 
             // Comprobamos si existe el usuario
+            const existUser = users.find( (user2) => user2.name == user )
+            if (existUser){
 
-            // En caso de que exista avisamos al usuario que ya existe el usuario con ese nombre
+                // Modal de aviso
+                setExistModal(true)
+                setTimeout( () => {
+                    setExistModal(false)
+                }, 3000)
+                
+            // Comprobamos que las contraseñas son iguales
+            }else if (password != confirmPassword){
 
-            // En caso de que no exista, registramos el usuario
+                // Modal de aviso
+                setPasswordModal(true)
+                setTimeout( () => {
+                    setPasswordModal(false)
+                }, 3000)
+            
+            // Registro con éxito
+            }else{
 
+                // Registramos el usuario
+                const newUser = {
+                    name: user,
+                    password: password,
+                    points: 0,
+                    rol: "user"
+                }
+                registerUser(newUser)
+    
+                // Modal avisando que el usuario se registro con éxito
+                setSuccessModal(true)
+                setTimeout( () => {
+                    setSuccessModal(false)
+                }, 3000)
+                
+                // Navegamos al login
+                setTimeout( () => {
+                    navigate("/")
+                }, 2500)
+            }
         }
     }
 
-    function access(e) {
-        
+    // Función que realiza el login del usuario
+    async function access(e) {
+
+        // Campos rellenos
+        if (user && password){
+            
+            // Evitar que al pulsar el boton se vacíen los campos
+            e.preventDefault()
+            
+            // Evitar sobrecarga de clics
+            if (incorrectModal) return;
+
+            // Recogemos los usuarios de la aplicación
+            const users = await getUsers()
+            console.log(users);
+
+            // Comprobamos si existe el usuario
+            const userExists = users.find( (user2) => user2.name == user )
+            if (!userExists){
+
+                // Modal de aviso usuario incorrecto
+                setIncorrectModal(true)
+                setTimeout( () => {
+                    setIncorrectModal(false)
+                }, 3000)
+                
+            // Comprobamos si las credenciales del usuario son correctas
+            }else if (! await checkUser(user, password)){
+
+                // Modal de aviso credenciales incorrectas
+                setIncorrectModal(true);
+                setTimeout(() => {
+                    setIncorrectModal(false)
+                }, 3000);
+
+            // Login con éxito
+            }else{
+                navigate("/home")
+            }
+        }
     }
 
     return (
 
         // Pantalla completa
         <div className='principal-card'>
+
+            {/* Modales de validación y errores */}
+            { existModal && <Modal text={'Ya existe un usuario con ese nombre'} type={'cross'}></Modal>}
+            { passwordModal && <Modal text={'Las contraseñas deben ser idénticas'} type={'cross'}></Modal>}
+            { successModal && <Modal text={'Usuario registrado con éxito'}></Modal>}
+            { incorrectModal && <Modal text={'Usuario o contraseña incorrectos'} type={'cross'}></Modal>}
 
             {/* Título */}
             <div className='header'>
@@ -101,6 +187,7 @@ function Login ({signIn}) {
                     }
                 </div>
 
+                {/* Enlaces para navegar entre páginas del login */}
                 {signIn && <a href="/signUp">Sign up</a>}
                 {!signIn && <a href="/">Sign in</a>}
                 

@@ -2,10 +2,10 @@ import Login from '../components/Login/Login'
 
 
 // Página de login donde el usuario registra la sesión
-function SignUp() {
+function SignUpPage() {
     return (
         <Login signIn={false}></Login>
     )
 }
 
-export default SignUp
+export default SignUpPage

@@ -1,15 +1,5 @@
-import os
-import mysql.connector
+from utils.db import get_db_connection 
 from flask import jsonify
-
-# Devolvemos la conexion a la base de datos
-def get_db_connection():
-    return mysql.connector.connect(
-        host=os.getenv("DB_HOST"),
-        user=os.getenv("DB_USER"),
-        password=os.getenv("DB_PASSWORD"),
-        database=os.getenv("DB_NAME")
-    )
 
 # Muestra todos los usuarios
 def show_all():
@@ -30,3 +20,22 @@ def show_all():
 
     # Retornar los resultados en formato JSON
     return jsonify(users)
+
+def insert_user(name, password, rol, points):
+    db = get_db_connection()
+    cursor = db.cursor()
+    hashed_pw = generate_password_hash(password)
+    cursor.execute("INSERT INTO users (name, password, rol, points) VALUES (%s, %s, %s, %s)", (name, hashed_pw, rol, points))
+    db.commit()
+    cursor.close()
+    db.close()
+    return True
+
+def find_user_by_name(name):
+    db = get_db_connection()
+    cursor = db.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM users WHERE name = %s", (name,))
+    user = cursor.fetchone()
+    cursor.close()
+    db.close()
+    return user

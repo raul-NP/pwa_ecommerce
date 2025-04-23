@@ -6,7 +6,7 @@ app = Flask(__name__)
 CORS(app)
 
 # Blueprint de usuarios del ecommerce
-app.register_blueprint(user_bp, url_prefix = "/api/users")
+app.register_blueprint(user_bp, url_prefix = "/users")
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

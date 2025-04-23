@@ -14,7 +14,8 @@ function Button ({ onClick, width, height, borderColor, borderWidth, text}){
             fontStyle: 'italic',
             fontSize: '2.5vh',
             backgroundColor: 'var(--secondary)',
-            color: 'var(--tertiary)'
+            color: 'var(--tertiary)',
+            cursor: 'pointer'
         }}>
             {text} 
         </button>
