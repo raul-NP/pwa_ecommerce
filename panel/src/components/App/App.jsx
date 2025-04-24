@@ -8,6 +8,9 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import SignInPage from '../../pages/SignInPage';
 import SignUpPage from '../../pages/SignUpPage';
 import HomePage from '../../pages/HomePage';
+import CategoriesPage from '../../pages/CategoriesPage';
+
+// Protección de rutas
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
 import PublicRoute from '../PublicRoute/PublicRoute';
 
@@ -31,6 +34,12 @@ function App() {
         <Route path="/home" element={
           <PrivateRoute>
             <HomePage />
+          </PrivateRoute>
+        } />
+
+        <Route path="/categories" element={
+          <PrivateRoute>
+            <CategoriesPage />
           </PrivateRoute>
         } />
 

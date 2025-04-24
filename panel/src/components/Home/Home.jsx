@@ -7,7 +7,7 @@ import './Home.css'
 import { useState } from 'react';
 
 // Componente general Login
-function Home () {
+function Home ({categories}) {
 
     return (
 
