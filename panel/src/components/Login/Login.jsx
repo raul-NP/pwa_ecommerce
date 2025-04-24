@@ -9,7 +9,7 @@ import downLineSvg from '../../assets/imgs/down_line.svg';
 import userSvg from '../../assets/imgs/user.svg';
 import passwordSvg from '../../assets/imgs/password.svg';
 import password2Svg from '../../assets/imgs/password_2.svg';
-import { checkUser, getUsers } from '../../services/api_service';
+import { registerUser, login, getUser } from '../../services/api_service';
 
 // Fuentes y estilos
 import '../../styles/fonts.css'
@@ -49,12 +49,8 @@ function Login ({signIn}) {
             // Evitar sobrecarga de clics
             if (existModal || passwordModal || successModal) return;
 
-            // Recogemos los usuarios de la aplicación
-            const users = await getUsers()
-            console.log(users);
-
             // Comprobamos si existe el usuario
-            const existUser = users.find( (user2) => user2.name == user )
+            const existUser = await getUser(user)
             if (existUser){
 
                 // Modal de aviso
@@ -82,7 +78,7 @@ function Login ({signIn}) {
                     points: 0,
                     rol: "user"
                 }
-                registerUser(newUser)
+                await registerUser(newUser)
     
                 // Modal avisando que el usuario se registro con éxito
                 setSuccessModal(true)
@@ -110,12 +106,8 @@ function Login ({signIn}) {
             // Evitar sobrecarga de clics
             if (incorrectModal) return;
 
-            // Recogemos los usuarios de la aplicación
-            const users = await getUsers()
-            console.log(users);
-
             // Comprobamos si existe el usuario
-            const userExists = users.find( (user2) => user2.name == user )
+            const userExists = await getUser(user)
             if (!userExists){
 
                 // Modal de aviso usuario incorrecto
@@ -125,7 +117,7 @@ function Login ({signIn}) {
                 }, 3000)
                 
             // Comprobamos si las credenciales del usuario son correctas
-            }else if (! await checkUser(user, password)){
+            }else if (!await login(user, password)){
 
                 // Modal de aviso credenciales incorrectas
                 setIncorrectModal(true);

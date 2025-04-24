@@ -5,7 +5,6 @@ import './Home.css'
 
 // Funcionalidades
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom'
 
 // Componente general Login
 function Home () {

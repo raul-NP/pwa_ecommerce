@@ -4,3 +4,4 @@ flask-mysql
 flask-jwt-extended
 mysql-connector-python
 werkzeug
+flask-jwt-extended

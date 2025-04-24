@@ -1,19 +1,33 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 from controllers.user_controller import show_all, insert_user, find_user_by_name
 from werkzeug.security import check_password_hash
+from flask_jwt_extended import create_access_token, jwt_required
 
 user_bp = Blueprint('user', __name__)
 
 # Listar todas las personas
 @user_bp.route("/", methods=['GET'])
-def index():
+@jwt_required()
+def get_users():
     return show_all()
+
+# Listar una persona por nombre
+@user_bp.route("/<string:name>", methods=['GET'])
+def get_user(name):
+
+    # Buscamos el usuario
+    user = find_user_by_name(name)
+
+    if not user:
+        return jsonify({"error": "Usuario no encontrado"}), 404
+
+    return jsonify(user), 200
 
 # Insertar usuarios
 @user_bp.route("/", methods = ['POST'])
 def post():
 
-    # Datos provinientes
+    # Datos provinientes del body
     data = request.get_json()
     name = data.get("name")
     password = data.get("password")
@@ -29,26 +43,31 @@ def post():
     insert_user(name, password, rol, points)
     return jsonify({"message": "Usuario registrado correctamente"}), 200 
 
-# Insertar usuarios
-@user_bp.route("/check", methods = ['POST'])
-def check():
+# Login del usuario 
+@user_bp.route("/login", methods = ['POST'])
+def login():
 
-    # Datos provinientes
-    data = request.get_json()
-    name = data.get("name")
-    password = data.get("password")
+    try:
+        data = request.get_json()
+        name = data.get("name")
+        password = data.get("password")
 
-    if not name or not password:
-        return jsonify({"error": "Campos obligatorios faltantes"}), 500
+        if not name or not password:
+            return jsonify({"error": "Campos obligatorios faltantes"}), 400
 
-    user = find_user_by_name(name)
-    if not user:
-        return jsonify({"error": "Usuario no encontrado"}), 409
+        user = find_user_by_name(name)
+        if not user:
+            return jsonify({"error": "Usuario no encontrado"}), 404
 
-    if not check_password_hash(user['password'], password):
-        return jsonify({"error": "Contraseña incorrecta"}), 500
+        if not check_password_hash(user['password'], password):
+            return jsonify({"error": "Contraseña incorrecta"}), 401
 
-    return jsonify({"message": "Acceso autorizado"}), 200 
+        token = create_access_token(identity=user["name"])
+        return jsonify(access_token=token), 200
+
+    except Exception as e:
+        print(f"Error en login: {e}")
+        return jsonify({"error": f"Error interno {e}"}), 500
 
 # Actualizamos usuarios
 @user_bp.route("/", methods=['PUT'])
