@@ -24,7 +24,11 @@ export async function getUser(name) {
 
     const response = await fetch(`${API_URL}/users/${name}`);
     
-    return response.status == 200
+    if (response.status != 200){
+        return false
+    }
+
+    return await response.json()
 }
 
 // Función que registra el usuario en la base de datos

@@ -4,7 +4,7 @@ import Home from '../components/Home/Home'
 function HomePage() {
 
     return (
-        <Home></Home>
+        <Home categories={false}></Home>
     )
 }
 
