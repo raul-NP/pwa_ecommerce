@@ -1,0 +1,11 @@
+.header-card{
+    height: 8vh;
+    background-color: var(--primary);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.perfil-icon{
+    background-color: var(--tertiary);
+}

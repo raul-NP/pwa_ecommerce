@@ -6,29 +6,42 @@ export function getToken() {
 }
 
 // Función para recoger los usuarios de la aplicación
-export async function getUsers() {
+// export async function getUsers() {
+
+//     const token = getToken()
+
+//     const response = await fetch(`${API_URL}/users/`, {
+//         headers: {
+//             'Authorization': `Bearer ${token}`
+//         }
+//     })
+//     return response.json();
+// }
+
+// Función que recoge un usuario por nombre
+// export async function getUser(name) {
+
+//     const response = await fetch(`${API_URL}/users/${name}`);
+    
+//     if (response.status != 200){
+//         return false
+//     }
+
+//     return await response.json()
+// }
+
+// Función para recuperar el usuario loggeado
+export async function getCurrentUser() {
 
     const token = getToken()
 
-    const response = await fetch(`${API_URL}/users/`, {
+    const response = await fetch(`${API_URL}/users/me`, {
         headers: {
             'Authorization': `Bearer ${token}`
         }
     })
+
     return response.json();
-}
-
-
-// Función que recoge un usuario por nombre
-export async function getUser(name) {
-
-    const response = await fetch(`${API_URL}/users/${name}`);
-    
-    if (response.status != 200){
-        return false
-    }
-
-    return await response.json()
 }
 
 // Función que registra el usuario en la base de datos
@@ -42,6 +55,11 @@ export async function registerUser(user) {
         body: JSON.stringify(user)
     })
 
+    // Usuario ya existente
+    if (response.status != 200){
+        return false
+    }
+
     return await response.json();
 }
   
@@ -54,6 +72,7 @@ export async function login(name, password) {
         body: JSON.stringify({ name, password })
     })
 
+    // Usuario no existe o credenciales incorrectas
     if (response.status != 200){
         return false 
     }

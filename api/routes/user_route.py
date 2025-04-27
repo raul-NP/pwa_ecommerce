@@ -1,22 +1,38 @@
 from flask import Blueprint, request, jsonify
 from controllers.user_controller import show_all, insert_user, find_user_by_name
 from werkzeug.security import check_password_hash
-from flask_jwt_extended import create_access_token, jwt_required
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
 user_bp = Blueprint('user', __name__)
 
 # Listar todas las personas
-@user_bp.route("/", methods=['GET'])
-@jwt_required()
-def get_users():
-    return show_all()
+# @user_bp.route("/", methods=['GET'])
+# @jwt_required()
+# def get_users():
+#     return show_all()
 
 # Listar una persona por nombre
-@user_bp.route("/<string:name>", methods=['GET'])
-def get_user(name):
+# @user_bp.route("/<string:name>", methods=['GET'])
+# def get_user(name):
 
-    # Buscamos el usuario
-    user = find_user_by_name(name)
+#     # Buscamos el usuario
+#     user = find_user_by_name(name)
+
+#     if not user:
+#         return jsonify({"error": "Usuario no encontrado"}), 404
+
+#     return jsonify(user), 200
+
+# Recuperar usuario actual loggeado
+@user_bp.route("/me", methods=["GET"])
+@jwt_required()  
+def get_current_user():
+
+    # Obtenemos la identidad  desde el token
+    current_user_name = get_jwt_identity()
+
+    # Buscar el usuario por su nombre
+    user = find_user_by_name(current_user_name)
 
     if not user:
         return jsonify({"error": "Usuario no encontrado"}), 404
@@ -68,6 +84,8 @@ def login():
     except Exception as e:
         print(f"Error en login: {e}")
         return jsonify({"error": f"Error interno {e}"}), 500
+
+
 
 # Actualizamos usuarios
 @user_bp.route("/", methods=['PUT'])

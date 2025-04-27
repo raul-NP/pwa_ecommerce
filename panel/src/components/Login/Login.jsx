@@ -9,7 +9,7 @@ import downLineSvg from '../../assets/imgs/down_line.svg';
 import userSvg from '../../assets/imgs/user.svg';
 import passwordSvg from '../../assets/imgs/password.svg';
 import password2Svg from '../../assets/imgs/password_2.svg';
-import { registerUser, login, getUser } from '../../services/api_service';
+import { registerUser, login } from '../../services/api_service';
 
 // Fuentes y estilos
 import '../../styles/fonts.css'
@@ -48,48 +48,50 @@ function Login ({signIn}) {
             
             // Evitar sobrecarga de clics
             if (existModal || passwordModal || successModal) return;
-
-            // Comprobamos si existe el usuario
-            const existUser = await getUser(user)
-            if (existUser){
-
-                // Modal de aviso
-                setExistModal(true)
-                setTimeout( () => {
-                    setExistModal(false)
-                }, 3000)
                 
             // Comprobamos que las contraseñas son iguales
-            }else if (password != confirmPassword){
+            if (password != confirmPassword){
 
                 // Modal de aviso
                 setPasswordModal(true)
                 setTimeout( () => {
                     setPasswordModal(false)
                 }, 3000)
-            
-            // Registro con éxito
+
+            // Comprobamos registro
             }else{
 
-                // Registramos el usuario
+                // Creamos los datos del usuario
                 const newUser = {
                     name: user,
                     password: password,
                     points: 0,
                     rol: "user"
                 }
-                await registerUser(newUser)
-    
-                // Modal avisando que el usuario se registro con éxito
-                setSuccessModal(true)
-                setTimeout( () => {
-                    setSuccessModal(false)
-                }, 3000)
-                
-                // Navegamos al login
-                setTimeout( () => {
-                    navigate("/")
-                }, 2500)
+
+                // Caso en el que el nombre de usuario ya existe
+                if (! await registerUser(newUser)){
+
+                    // Modal de aviso
+                    setExistModal(true)
+                    setTimeout( () => {
+                        setExistModal(false)
+                    }, 3000)
+                    
+                // Registro con éxito
+                }else{
+                    
+                    // Modal avisando que el usuario se registro con éxito
+                    setSuccessModal(true)
+                    setTimeout( () => {
+                        setSuccessModal(false)
+                    }, 3000)
+                    
+                    // Navegamos al login
+                    setTimeout( () => {
+                        navigate("/")
+                    }, 2500)
+                }
             }
         }
     }
@@ -106,20 +108,10 @@ function Login ({signIn}) {
             // Evitar sobrecarga de clics
             if (incorrectModal) return;
 
-            // Comprobamos si existe el usuario
-            const userExists = await getUser(user)
-            if (!userExists){
+            // Caso de que las credenciales son incorrectas
+            if (!await login(user, password)){
 
-                // Modal de aviso usuario incorrecto
-                setIncorrectModal(true)
-                setTimeout( () => {
-                    setIncorrectModal(false)
-                }, 3000)
-                
-            // Comprobamos si las credenciales del usuario son correctas
-            }else if (!await login(user, password)){
-
-                // Modal de aviso credenciales incorrectas
+                // Modal de aviso
                 setIncorrectModal(true);
                 setTimeout(() => {
                     setIncorrectModal(false)

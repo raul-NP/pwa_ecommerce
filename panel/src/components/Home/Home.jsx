@@ -11,18 +11,30 @@ import '../../styles/colors.css'
 import './Home.css'
 
 // Funcionalidades
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'
+import { getCurrentUser } from '../../services/api_service'
 
 // Componente general Login
 function Home ({categories}) {
 
-    const navigate = useNavigate()
+    // Datos del usuario
+    const [user, setUser] = useState(null);
+    useEffect(() => {
+        const fetchUserData = async () => {
+            const userData = await getCurrentUser();
+            setUser(userData);
+        };
+        fetchUserData();
+    }, []);
 
-    function handleClick(){
-        localStorage.setItem("token", "")
+    // Cierre de sesión del usuario
+    const navigate = useNavigate()
+    const logout = () => {
+        localStorage.removeItem("token");
+        setUser(null);
         navigate("/")
-    }
+    };
 
     return (
 
@@ -30,12 +42,12 @@ function Home ({categories}) {
         <div className='init-card'>
 
             {/* Header del incio */}
-            <Header categories={categories}></Header>
+            <Header userName={user?.name} categories={categories}></Header>
 
-            <button onClick={handleClick}>cerrar sesion</button>
+            <button onClick={logout}>cerrar sesion</button>
 
             {/* Footer de la aplicación */}
-            <Footer></Footer>
+            <Footer />
         </div>
     )
 }
