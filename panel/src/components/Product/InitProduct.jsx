@@ -20,6 +20,7 @@ function InitProduct({productImage, productName, productPrice}) {
     const [addModal, setAddModal] = useState(false)
     const likeSvg = liked ? likeStuffed : like;
     const addSvg = added ? check : cart;
+    const addClass = added ? 'product-added-svg' : 'product-add-svg';
 
     // Función que añade un producto a la categoría de favoritos
     function likeAction() {
@@ -77,7 +78,7 @@ function InitProduct({productImage, productName, productPrice}) {
                 {/* Botón de añadir al carrito un producto */}
                 <div onClick={addAction} className='product-add'>
                     <h1>Add</h1>
-                    <img className='product-add-svg' src={addSvg}/>
+                    <img className={addClass} src={addSvg}/>
                 </div>
 
                 {/* Botón de añadir un producto a favoritos */}

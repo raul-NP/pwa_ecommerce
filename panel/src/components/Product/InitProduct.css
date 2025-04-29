@@ -5,7 +5,6 @@
     background-color: white;
     display: flex;
     flex-direction: column;
-    position: relative;
 }
 
 .product-image{
@@ -48,6 +47,7 @@
 
 .product-add{
     width: 17vw;
+    height: 2.6vh;
     padding: 0.5vh;
     display: flex;
     flex-direction: row;
@@ -59,13 +59,19 @@
 
 .product-add-svg{
     background-color: var(--secondary);
+    width: 2.5vh;
+}
+.product-added-svg{
+    background-color: var(--secondary);
+    width: 2.2vh;
 }
 
 .product-like{
+    width: 10vw;
+    height: 2.6vh;
     padding: 0.5vh;
     display: flex;
     justify-content: center;
-    width: 10vw;
     border-radius: 2vh;
     background-color: var(--secondary);
 }
