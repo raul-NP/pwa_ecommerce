@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify
 from controllers.user_controller import show_all, insert_user, find_user_by_name
 from werkzeug.security import check_password_hash
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+import re
 
 user_bp = Blueprint('user', __name__)
 
@@ -55,6 +56,9 @@ def post():
 
     if find_user_by_name(name):
         return jsonify({"error": "El usuario ya existe"}), 409
+
+    if not re.fullmatch(r"[A-Za-z ]+", name):
+        return jsonify({"error": "El nombre solo puede contener letras"}), 400
 
     insert_user(name, password, rol, points)
     return jsonify({"message": "Usuario registrado correctamente"}), 200 

@@ -9,7 +9,6 @@ import downLineSvg from '../../assets/imgs/down_line.svg';
 import userSvg from '../../assets/imgs/user.svg';
 import passwordSvg from '../../assets/imgs/password.svg';
 import password2Svg from '../../assets/imgs/password_2.svg';
-import { registerUser, login } from '../../services/api_service';
 
 // Fuentes y estilos
 import '../../styles/fonts.css'
@@ -19,6 +18,7 @@ import './Login.css'
 // Funcionalidades
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom'
+import { registerUser, login } from '../../services/api_service';
 
 // Componente general Login
 function Login ({signIn}) {
@@ -36,6 +36,14 @@ function Login ({signIn}) {
     const [passwordModal, setPasswordModal] = useState(false)
     const [successModal, setSuccessModal] = useState(false)
     const [incorrectModal, setIncorrectModal] = useState(false)
+    const [charsModal, setCharsModal] = useState(false)
+
+    // Función para comprobar si el nombre de usuario contiene solo letras
+    function haveOnlyLetters(userName) {
+
+        const regex = /^[A-Za-zÀ-ÿ\s]+$/;
+        return regex.test(userName.trim());
+    }
 
     // Función para registrar el usuario
     async function signUp(e) {
@@ -69,8 +77,17 @@ function Login ({signIn}) {
                     rol: "user"
                 }
 
+                // Caso en el que el nombre contiene caracteres distintos a letras
+                if (!haveOnlyLetters(user)){
+
+                    // Modal de aviso
+                    setCharsModal(true)
+                    setTimeout( () => {
+                        setCharsModal(false)
+                    }, 3000)
+
                 // Caso en el que el nombre de usuario ya existe
-                if (! await registerUser(newUser)){
+                }else if (! await registerUser(newUser)){
 
                     // Modal de aviso
                     setExistModal(true)
@@ -130,8 +147,9 @@ function Login ({signIn}) {
         <div className='principal-card'>
 
             {/* Modales de validación y errores */}
-            { existModal && <Modal text={'Ya existe un usuario con ese nombre'} type={'cross'}></Modal>}
+            { charsModal && <Modal text={'El nombre de usuario debe contener únicamente letras'} type={'cross'}></Modal>}
             { passwordModal && <Modal text={'Las contraseñas deben ser idénticas'} type={'cross'}></Modal>}
+            { existModal && <Modal text={'Ya existe un usuario con ese nombre'} type={'cross'}></Modal>}
             { successModal && <Modal text={'Usuario registrado con éxito'}></Modal>}
             { incorrectModal && <Modal text={'Usuario o contraseña incorrectos'} type={'cross'}></Modal>}
 
@@ -155,7 +173,7 @@ function Login ({signIn}) {
                     {/* Usuario */}
                     <div className='input-container'>
                         <img id='user' src={userSvg}/>
-                        <input onChange={ (e) => {setUser(e.target.value)} } className='inputs' type="text" placeholder='User' maxLength={20} required/>
+                        <input onChange={ (e) => {setUser(e.target.value)} } className='inputs' type="text" placeholder='Username' maxLength={20} required/>
                     </div>
 
                     {/* Contraseña */}

@@ -1,17 +1,17 @@
-import './Header.css'
+import './PerfilHeader.css'
 
 // Header de inicio y búsqueda de categorías
-function Header({categories, userName}) {
+function PerfilHeader({categories, userName}) {
     
     
 
     return (
 
         // Header
-        <div className='header-card'>
+        <div className=''>
 
             {/* Icono Perfil */}
-            <div className='perfil-icon'>
+            <div className=''>
                 <h1></h1>
             </div>
 
@@ -21,4 +21,4 @@ function Header({categories, userName}) {
     )
 }
 
-export default Header
+export default PerfilHeader

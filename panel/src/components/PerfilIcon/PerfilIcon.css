@@ -1,0 +1,19 @@
+.perfil-icon-card{
+    padding-left: 4vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.perfil-icon{
+    background-color: var(--tertiary);
+    color: var(--primary);
+    width: 2.8vh;
+    height: 2.8vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.3vh;
+    border-radius: 50%;
+    font-size: 2vh;
+}

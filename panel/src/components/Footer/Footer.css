@@ -1,0 +1,50 @@
+.menu{
+    justify-self: end;
+    background-color: var(--primary);
+    height: 8vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.icon-card{
+    display: flex;
+    position: relative;
+}
+#n-products{
+    width: 1.5vh;
+    height: 1.5vh;
+    border-radius: 50%;
+    background-color: var(--tertiary);
+    align-items: start;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--primary);
+    font-size: 1.3vh;
+    position: absolute;
+    left: 3vh;
+    bottom: 2.3vh;
+}
+
+#home-svg{
+    width: 2.7vh;
+    cursor: pointer;
+}
+#categories-svg{
+    width: 3.2vh;
+    cursor: pointer;
+}
+#logo-svg{
+    width: 4.5vh;
+    cursor: pointer;
+}
+#cart-svg{
+    width: 3vh;
+    cursor: pointer;
+}
+#perfil-svg{
+    width: 2.7vh;
+    cursor: pointer;
+}

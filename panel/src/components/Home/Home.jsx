@@ -1,6 +1,7 @@
 // Componentes
-import Header from '../Header/Header'
 import Footer from '../Footer/Footer'
+import PerfilIcon from '../PerfilIcon/PerfilIcon';
+import InitProduct from '../Product/InitProduct';
 
 // Imagenes
 
@@ -18,8 +19,10 @@ import { getCurrentUser } from '../../services/api_service'
 // Componente general Login
 function Home ({categories}) {
 
-    // Datos del usuario
     const [user, setUser] = useState(null);
+    const categoriesName = ["TODOS", "ANILLOS", "COLLARES", "RELOJES"]
+
+    // Datos del usuario
     useEffect(() => {
         const fetchUserData = async () => {
             const userData = await getCurrentUser();
@@ -27,6 +30,15 @@ function Home ({categories}) {
         };
         fetchUserData();
     }, []);
+    
+    // Función para capitalizar el nombre de usuario
+    function capitalizeName(userName) {
+        if (userName){
+            return userName.trim().split(/\s+/).map(word => 
+                word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+            ).join(' ');
+        }
+    }
 
     // Cierre de sesión del usuario
     const navigate = useNavigate()
@@ -42,9 +54,47 @@ function Home ({categories}) {
         <div className='init-card'>
 
             {/* Header del incio */}
-            <Header userName={user?.name} categories={categories}></Header>
+            <div className='init-header'>
+
+                {/* Icono del perfil */}
+                <PerfilIcon userName={user?.name}></PerfilIcon>
+
+                {/* Mensaje de bienvenida */}
+                { !categories && 
+                    <div className='init-tittle'>
+                        Bienvenido, {capitalizeName(user?.name)}
+                    </div>
+                }
+
+                {/* Barra de búsqueda de categorías */}
+                { categories && 
+
+                    // Drop down
+                    <div className='dropdown-container'>
+                        <select className='dropdown'>
+                            {categoriesName.map((category, index) => (
+                                <option key={index} value={category}>
+                                    {category}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                }
+
+            </div>
 
             <button onClick={logout}>cerrar sesion</button>
+
+            {/* Cuerpo con los productos de la aplicación */}
+            <div className='products'>
+
+                {/* Cada fila de dos productos */}
+                <div className='products-row'>
+
+                    {/* Cada producto */}
+                    <InitProduct productImage={"https://www.rabat.net/media/catalog/product/r/o/rolex-deepsea-m136660-0005.png"} productName={"Reloj Rolex"} productPrice={2199.99}></InitProduct>
+                </div>
+            </div>
 
             {/* Footer de la aplicación */}
             <Footer />
