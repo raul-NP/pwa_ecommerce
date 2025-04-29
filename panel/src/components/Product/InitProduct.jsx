@@ -18,19 +18,37 @@ function InitProduct({productImage, productName, productPrice}) {
     const [liked, setLiked] = useState(false)
     const [added, setAdded] = useState(false)
     const [addModal, setAddModal] = useState(false)
+    const [likeModal, setLikeModal] = useState(false)
+    const [unlikeModal, setUnlikeModal] = useState(false)
     const likeSvg = liked ? likeStuffed : like;
     const addSvg = added ? check : cart;
     const addClass = added ? 'product-added-svg' : 'product-add-svg';
 
+    // Useffect de ver si el producto esta en favoritos para setear el liked en true o false
+
+    
     // Función que añade un producto a la categoría de favoritos
     function likeAction() {
         
+        
         // Petición de insercción de un producto en categoria favoritos
         if (liked){
-
-        // Petición de eliminación de un producto de categoría favoritos
+            
+            // Modal de producto likeado
+            setLikeModal(true)
+            setTimeout( () => {
+                setLikeModal(false)
+            }, 3000)
+            
+            // Petición de eliminación de un producto de categoría favoritos
         }else{
-
+            
+            // Modal de producto unlikeado
+            setUnlikeModal(true)
+            setTimeout( () => {
+                setUnlikeModal(false)
+            }, 3000)
+            
         }
 
         // Cambiamos el estado de like
@@ -59,7 +77,9 @@ function InitProduct({productImage, productName, productPrice}) {
         // Card del producto
         
         <div className='product'>
-            { added && <Modal text={'El nombre de usuario debe contener únicamente letras'} type={'cross'}></Modal>}
+            { addModal && <Modal text={`${productName} se ha añadido al carrito`} type={'cross'}></Modal>}
+            { liked && likeModal && <Modal text={`${productName} se ha añadido a favoritos`} type={'cross'}></Modal>}
+            { !liked &&  unlikeModal && <Modal text={`${productName} se ha eliminado de favoritos`} type={'cross'}></Modal>}
 
             {/* Imágen del producto */}
             <div className='product-image'>
