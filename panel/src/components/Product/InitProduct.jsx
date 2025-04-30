@@ -13,7 +13,7 @@ import check from '../../assets/imgs/check_2.svg';
 // Funcionalidad
 import { useState } from 'react';
 
-function InitProduct({productImage, productName, productPrice}) {
+function InitProduct({productImage, productName, productPrice, showModal}) {
 
     const [liked, setLiked] = useState(false)
     const [added, setAdded] = useState(false)
@@ -29,6 +29,10 @@ function InitProduct({productImage, productName, productPrice}) {
     
     // Función que añade un producto a la categoría de favoritos
     function likeAction() {
+        
+        // Cambiamos el estado de like
+        setLiked(!liked)
+        console.log(liked);
         
         
         // Petición de insercción de un producto en categoria favoritos
@@ -47,12 +51,9 @@ function InitProduct({productImage, productName, productPrice}) {
             setUnlikeModal(true)
             setTimeout( () => {
                 setUnlikeModal(false)
-            }, 3000)
-            
+            }, 3000)   
         }
-
-        // Cambiamos el estado de like
-        setLiked(!liked)
+        
     }
 
     // Función que añade al carito un producto
@@ -77,9 +78,9 @@ function InitProduct({productImage, productName, productPrice}) {
         // Card del producto
         
         <div className='product'>
-            { addModal && <Modal text={`${productName} se ha añadido al carrito`} type={'cross'}></Modal>}
-            { liked && likeModal && <Modal text={`${productName} se ha añadido a favoritos`} type={'cross'}></Modal>}
-            { !liked &&  unlikeModal && <Modal text={`${productName} se ha eliminado de favoritos`} type={'cross'}></Modal>}
+            { addModal && <Modal text={`${productName} se ha añadido al carrito`}></Modal>}
+            { unlikeModal && <Modal text={`${productName} se ha añadido a favoritos`}></Modal>}
+            { likeModal && <Modal text={`${productName} se ha eliminado de favoritos`}></Modal>}
 
             {/* Imágen del producto */}
             <div className='product-image'>

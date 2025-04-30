@@ -53,5 +53,13 @@
 }
 
 .products{
-    height: 84vh;
+    max-height: 84vh;
+    overflow-y: auto;
+}
+
+.products-row{
+    display: flex;
+    flex-direction: row;
+    margin: 5vw;
+    justify-content: space-around;
 }

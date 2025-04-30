@@ -78,16 +78,12 @@
 }
 
 #user{
-    width: 2.6vh;
-    margin-right: 0.6vh;
+    margin-right: 0.5vh;
 }
 #password{
-    width: 2.8vh;
-    margin-left: -0.3vh;
-    margin-right: 0.7vh;
+    margin-right: 0.5vh;
 }
 #view{
-    width: 2.3vh;
     cursor: pointer;
 }
 

@@ -29,22 +29,18 @@
 }
 
 #home-svg{
-    width: 2.7vh;
     cursor: pointer;
 }
 #categories-svg{
-    width: 3.2vh;
     cursor: pointer;
 }
 #logo-svg{
-    width: 4.5vh;
     cursor: pointer;
+    width: 4.5vh;
 }
 #cart-svg{
-    width: 3vh;
     cursor: pointer;
 }
 #perfil-svg{
-    width: 2.7vh;
     cursor: pointer;
 }

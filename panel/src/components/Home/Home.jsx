@@ -20,6 +20,7 @@ import { getCurrentUser } from '../../services/api_service'
 function Home ({categories}) {
 
     const [user, setUser] = useState(null);
+    const [modalText, setModalText] = useState(null);
     const categoriesName = ["TODOS", "ANILLOS", "COLLARES", "RELOJES"]
 
     // Datos del usuario
@@ -39,6 +40,13 @@ function Home ({categories}) {
             ).join(' ');
         }
     }
+
+    // Función para mostrar los modales
+    const showModal = (text) => {
+        setModalText(text);
+        setTimeout(() => setModalText(null), 3000);
+    };
+    
 
     // Cierre de sesión del usuario
     const navigate = useNavigate()
@@ -88,12 +96,37 @@ function Home ({categories}) {
             {/* Cuerpo con los productos de la aplicación */}
             <div className='products'>
 
+                {modalText && <Modal text={modalText} />}
+
                 {/* Cada fila de dos productos */}
                 <div className='products-row'>
 
                     {/* Cada producto */}
-                    <InitProduct productImage={"https://www.rabat.net/media/catalog/product/r/o/rolex-deepsea-m136660-0005.png"} productName={"Reloj Rolex"} productPrice={2199.99}></InitProduct>
+                    <InitProduct showModal={showModal} productImage={"https://www.rabat.net/media/catalog/product/r/o/rolex-deepsea-m136660-0005.png"} productName={"Reloj Rolex"} productPrice={2199.99}></InitProduct>
+                    <InitProduct showModal={showModal} productImage={"https://www.rabat.net/media/catalog/product/r/o/rolex-deepsea-m136660-0005.png"} productName={"Reloj Rolex"} productPrice={2199.99}></InitProduct>
                 </div>
+
+                <div className='products-row'>
+
+                    {/* Cada producto */}
+                    <InitProduct showModal={showModal} productImage={"https://www.rabat.net/media/catalog/product/r/o/rolex-deepsea-m136660-0005.png"} productName={"Reloj Rolex"} productPrice={2199.99}></InitProduct>
+                    <InitProduct showModal={showModal} productImage={"https://www.rabat.net/media/catalog/product/r/o/rolex-deepsea-m136660-0005.png"} productName={"Reloj Rolex"} productPrice={2199.99}></InitProduct>
+                </div>
+
+                <div className='products-row'>
+
+                    {/* Cada producto */}
+                    <InitProduct showModal={showModal} productImage={"https://www.rabat.net/media/catalog/product/r/o/rolex-deepsea-m136660-0005.png"} productName={"Reloj Rolex"} productPrice={2199.99}></InitProduct>
+                    <InitProduct showModal={showModal} productImage={"https://www.rabat.net/media/catalog/product/r/o/rolex-deepsea-m136660-0005.png"} productName={"Reloj Rolex"} productPrice={2199.99}></InitProduct>
+                </div>
+
+                <div className='products-row'>
+
+                    {/* Cada producto */}
+                    <InitProduct showModal={showModal} productImage={"https://www.rabat.net/media/catalog/product/r/o/rolex-deepsea-m136660-0005.png"} productName={"Reloj Rolex"} productPrice={2199.99}></InitProduct>
+                    <InitProduct showModal={showModal} productImage={"https://www.rabat.net/media/catalog/product/r/o/rolex-deepsea-m136660-0005.png"} productName={"Reloj Rolex"} productPrice={2199.99}></InitProduct>
+                </div>
+
             </div>
 
             {/* Footer de la aplicación */}
