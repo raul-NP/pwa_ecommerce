@@ -26,16 +26,24 @@ CREATE TABLE categories (
     name VARCHAR(100) NOT NULL
 );
 
--- Crear tabla de productos
+-- Crear tabla de productos (sin columna de categoría)
 CREATE TABLE products (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     price FLOAT NOT NULL,
     stock INT NOT NULL,
     url_image VARCHAR(255),
-    description VARCHAR(250),
-    id_category INT,
-    FOREIGN KEY (id_category) REFERENCES categories(id)
+    description VARCHAR(250)
+);
+
+-- Crear tabla intermedia: productos-categorías
+CREATE TABLE product_categories (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_product INT NOT NULL,
+    id_category INT NOT NULL,
+    FOREIGN KEY (id_product) REFERENCES products(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_category) REFERENCES categories(id) ON DELETE CASCADE,
+    UNIQUE (id_product, id_category)
 );
 
 -- Crear tabla intermedia: productos en el carrito
@@ -70,34 +78,44 @@ CREATE TABLE order_products (
     FOREIGN KEY (id_order) REFERENCES orders(id)
 );
 
--- Insertar categoría de ejemplo
+-- Insertar productos
+INSERT INTO products (name, price, stock, url_image, description) VALUES
+('Reloj deepsea', 450.00, 10, 'https://www.rabat.net/media/catalog/product/r/o/rolex-deepsea-m136660-0005.png', 'Reloj rolex deepsea de Acero Oystersteel y esfera color d-blue'),
+('Pulsera plata', 620.00, 5, 'https://dimequemequieres.net/cdn/shop/products/pulsera-aline-plata-producto_569cd8aa-4d16-48b1-a90e-f3790082e968.png?v=1743504391&width=1500', 'Pulsera de plata de ley 925 milesimas');
+
+-- Insertar categorías
 INSERT INTO categories (name) VALUES
+('Todos'),
+('Relojes'),
 ('Anillos'),
 ('Collares'),
-('Pulseras');
+('Pulseras'),
+('Favoritos');
 
--- Insertar productos de ejemplo
-INSERT INTO products (name, price, stock, url_image, description, id_category) VALUES
-('Anillo Oro 18K', 450.00, 10, 'https://example.com/anillo1.jpg', 'Anillo de oro amarillo 18K', 1),
-('Collar Perlas', 620.00, 5, 'https://example.com/collar1.jpg', 'Collar clásico de perlas naturales', 2);
+-- Relacionar productos con categorías
+INSERT INTO product_categories (id_product, id_category) VALUES
+(1, 1), -- Reloj deepsea -> Todos
+(1, 2), -- Reloj deepsea -> Relojes
+(1, 6), -- Reloj deepsea -> Favoritos
+(2, 1), -- Collar Perlas -> Todos
+(2, 5); -- Collar Perlas -> Pulseras
 
 -- Insertar usuario administrador
 INSERT INTO users (name, password, rol, points) VALUES
-('admin', 'admin_password_hash', 'admin', 0);
+('admin', 'admin', 'admin', 0);
 
 -- Insertar carrito para el admin
 INSERT INTO carts (id_user) VALUES (1);
 
--- Insertar productos en el carrito
+-- Insertar productos en el carrito (ejemplo comentado)
 -- INSERT INTO cart_products (id_product, id_cart, quantity) VALUES
 -- (1, 1, 1),
 -- (2, 1, 2);
 
--- Insertar pedido del admin
+-- Insertar pedido del admin (ejemplo comentado)
 -- INSERT INTO orders (date, n_ref, address, state, total, id_user) VALUES
 -- (CURDATE(), 'ORD-0001', 'Calle Falsa 123, Logroño', 'pagado', 1690.00, 1);
 
--- Insertar productos en el pedido
+-- Insertar productos en el pedido (ejemplo comentado)
 -- INSERT INTO order_products (id_product, id_order, quantity) VALUES
 -- (1, 1, 1),
--- (2, 1, 2);

@@ -14,22 +14,37 @@ import './Home.css'
 // Funcionalidades
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'
-import { getCurrentUser } from '../../services/api_service'
+import { getCategories, getCurrentUser, getProductsByCategory } from '../../services/api_service'
+import Modal from '../Modal/Modal';
 
 // Componente general Login
 function Home ({categories}) {
 
     const [user, setUser] = useState(null);
+    const [products, setProducts] = useState([]);
+    const [categoriesName, setCategoriesName] = useState([]);
+    const [currentCategory, setCurrentCategory] = useState('Todos');
     const [modalText, setModalText] = useState(null);
-    const categoriesName = ["TODOS", "ANILLOS", "COLLARES", "RELOJES"]
+    const [modalProcessing, setModalProcessing] = useState(false);
 
-    // Datos del usuario
+    // Datos del usuario, categorias y productos
     useEffect(() => {
-        const fetchUserData = async () => {
-            const userData = await getCurrentUser();
-            setUser(userData);
+        const fetchUser = async () => {
+            const user = await getCurrentUser()
+            setUser(user)
         };
-        fetchUserData();
+        const fetchProducts = async () => {
+            const products = await getProductsByCategory(currentCategory)
+            setProducts(products)
+        };
+        const fetchCategories = async () => {
+            const categories = await getCategories()
+            setCategoriesName(categories)
+        };
+
+        fetchCategories()
+        fetchUser()
+        fetchProducts()
     }, []);
     
     // Función para capitalizar el nombre de usuario
@@ -41,12 +56,17 @@ function Home ({categories}) {
         }
     }
 
+    // Funcion para refrescar los productos
+    const refreshProducts = async () => {
+        const products = await getProductsByCategory(currentCategory);
+        setProducts(products);
+    };
+
     // Función para mostrar los modales
     const showModal = (text) => {
         setModalText(text);
         setTimeout(() => setModalText(null), 3000);
     };
-    
 
     // Cierre de sesión del usuario
     const navigate = useNavigate()
@@ -67,22 +87,32 @@ function Home ({categories}) {
                 {/* Icono del perfil */}
                 <PerfilIcon userName={user?.name}></PerfilIcon>
 
-                {/* Mensaje de bienvenida */}
+                {/* Pagina Home*/}
                 { !categories && 
                     <div className='init-tittle'>
-                        Bienvenido, {capitalizeName(user?.name)}
+                        Bienvenido/a, {capitalizeName(user?.name)}
                     </div>
                 }
 
-                {/* Barra de búsqueda de categorías */}
+                {/* Pagina Categorías */}
                 { categories && 
 
-                    // Drop down
+                    // Drop down de categorias
                     <div className='dropdown-container'>
-                        <select className='dropdown'>
+
+                        {/* Logica del dropdown al cambiar de categoria */}
+                        <select className='dropdown' value={currentCategory} 
+                        onChange={async (e) => {
+                            const category = e.target.value
+                            setCurrentCategory(e.target.value)
+                            const products = await getProductsByCategory(category)
+                            setProducts(products)
+                        }}>
+
+                            {/* Todas las categorias */}
                             {categoriesName.map((category, index) => (
-                                <option key={index} value={category}>
-                                    {category}
+                                <option key={index} value={category.name}>
+                                    {category.name}
                                 </option>
                             ))}
                         </select>
@@ -98,35 +128,38 @@ function Home ({categories}) {
 
                 {modalText && <Modal text={modalText} />}
 
-                {/* Cada fila de dos productos */}
-                <div className='products-row'>
+                {products.length > 0 && (
+                    
+                    // Agrupamos en subarrays de dos todos los productos
+                    products.reduce((rows, product, index) => {
+                        if (index % 2 === 0){
+                            rows.push([product])
+                        }else{
+                            rows[rows.length - 1].push(product)
+                        }
+                        return rows
 
-                    {/* Cada producto */}
-                    <InitProduct showModal={showModal} productImage={"https://www.rabat.net/media/catalog/product/r/o/rolex-deepsea-m136660-0005.png"} productName={"Reloj Rolex"} productPrice={2199.99}></InitProduct>
-                    <InitProduct showModal={showModal} productImage={"https://www.rabat.net/media/catalog/product/r/o/rolex-deepsea-m136660-0005.png"} productName={"Reloj Rolex"} productPrice={2199.99}></InitProduct>
-                </div>
+                    // Recorremos los grupos de arrays de dos productos 
+                    }, []).map((pair, idx) => (
 
-                <div className='products-row'>
+                        // Cada fila de productos
+                        <div key={idx} className="products-row">
 
-                    {/* Cada producto */}
-                    <InitProduct showModal={showModal} productImage={"https://www.rabat.net/media/catalog/product/r/o/rolex-deepsea-m136660-0005.png"} productName={"Reloj Rolex"} productPrice={2199.99}></InitProduct>
-                    <InitProduct showModal={showModal} productImage={"https://www.rabat.net/media/catalog/product/r/o/rolex-deepsea-m136660-0005.png"} productName={"Reloj Rolex"} productPrice={2199.99}></InitProduct>
-                </div>
-
-                <div className='products-row'>
-
-                    {/* Cada producto */}
-                    <InitProduct showModal={showModal} productImage={"https://www.rabat.net/media/catalog/product/r/o/rolex-deepsea-m136660-0005.png"} productName={"Reloj Rolex"} productPrice={2199.99}></InitProduct>
-                    <InitProduct showModal={showModal} productImage={"https://www.rabat.net/media/catalog/product/r/o/rolex-deepsea-m136660-0005.png"} productName={"Reloj Rolex"} productPrice={2199.99}></InitProduct>
-                </div>
-
-                <div className='products-row'>
-
-                    {/* Cada producto */}
-                    <InitProduct showModal={showModal} productImage={"https://www.rabat.net/media/catalog/product/r/o/rolex-deepsea-m136660-0005.png"} productName={"Reloj Rolex"} productPrice={2199.99}></InitProduct>
-                    <InitProduct showModal={showModal} productImage={"https://www.rabat.net/media/catalog/product/r/o/rolex-deepsea-m136660-0005.png"} productName={"Reloj Rolex"} productPrice={2199.99}></InitProduct>
-                </div>
-
+                            {/* Cada uno de los productos */}
+                            {pair.map((product) => (
+                                <InitProduct 
+                                    key={product?.id} 
+                                    showModal={showModal} 
+                                    product={product} 
+                                    modalProcessing={modalProcessing} 
+                                    setModalProcessing={setModalProcessing} 
+                                    refreshProducts={refreshProducts} 
+                                    isFavoritesView={categories && currentCategory === "Favoritos"}
+                                />
+                            ))}
+                        </div>
+                    ))
+                )}
             </div>
 
             {/* Footer de la aplicación */}

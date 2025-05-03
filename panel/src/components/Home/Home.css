@@ -2,7 +2,7 @@
     height: 100vh;
     display: flex;
     flex-direction: column;
-    background-color: var(--tertiary);
+    background-color: var(--quaternary);
 }
 
 .init-header{
@@ -53,8 +53,9 @@
 }
 
 .products{
-    max-height: 84vh;
+    flex: 1;
     overflow-y: auto;
+    position: relative;
 }
 
 .products-row{

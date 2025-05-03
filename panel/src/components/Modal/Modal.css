@@ -1,7 +1,7 @@
 .container{
     animation-name: appear;
     animation-duration: 3s;
-
+    position: fixed;
     right: 1vw;
     opacity: 1;
     top: 1.5vw;

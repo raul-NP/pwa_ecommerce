@@ -1,7 +1,12 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
-from routes.user_route import user_bp
-from flask_jwt_extended import JWTManager
+from routes.users_route import users_bp
+from routes.categories_routes import categories_bp
+from routes.products_routes import products_bp
+from flask_jwt_extended import JWTManager\
+
+
+
 import os
 
 app = Flask(__name__)
@@ -16,7 +21,13 @@ app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY")
 jwt = JWTManager(app)
 
 # Blueprint de usuarios del ecommerce
-app.register_blueprint(user_bp, url_prefix = "/users")
+app.register_blueprint(users_bp, url_prefix = "/users")
+
+# Blueprint de las categorias del ecommerce
+app.register_blueprint(categories_bp, url_prefix = "/categories")
+
+# Blueprint de los productos del ecommerce
+app.register_blueprint(products_bp, url_prefix = "/products")
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

@@ -11,87 +11,109 @@ import cart from '../../assets/imgs/cart.svg';
 import check from '../../assets/imgs/check_2.svg';
 
 // Funcionalidad
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { assignProductToCategory, removeProductFromCategory } from '../../services/api_service';
 
-function InitProduct({productImage, productName, productPrice, showModal}) {
+function InitProduct({product, showModal, modalProcessing, setModalProcessing, refreshProducts }) {
 
     const [liked, setLiked] = useState(false)
     const [added, setAdded] = useState(false)
-    const [addModal, setAddModal] = useState(false)
-    const [likeModal, setLikeModal] = useState(false)
-    const [unlikeModal, setUnlikeModal] = useState(false)
     const likeSvg = liked ? likeStuffed : like;
     const addSvg = added ? check : cart;
-    const addClass = added ? 'product-added-svg' : 'product-add-svg';
 
-    // Useffect de ver si el producto esta en favoritos para setear el liked en true o false
+    useEffect(() => {
 
+        // Observamos si el producto ya estaba en favoritos, para cambiar el estado de favorito
+        const checkLiked = async () => {
+            const response = await assignProductToCategory(product?.id, 'Favoritos')
+            
+            // Caso en el que ya esta en favoritos el producto
+            if (!response){
+                setLiked(true)
+
+            // Caso contrario
+            }else{
+                await removeProductFromCategory(product?.id, 'Favoritos')
+                setLiked(false)
+            }
+        };
+        
+        checkLiked()
+    }, []);
     
     // Función que añade un producto a la categoría de favoritos
-    function likeAction() {
+    async function likeAction() {
         
-        // Cambiamos el estado de like
-        setLiked(!liked)
-        console.log(liked);
-        
-        
+        // Proteccion de spam de clics
+        if (modalProcessing) return;
+        setModalProcessing(true);
+
         // Petición de insercción de un producto en categoria favoritos
-        if (liked){
+        if (!liked){
             
-            // Modal de producto likeado
-            setLikeModal(true)
-            setTimeout( () => {
-                setLikeModal(false)
-            }, 3000)
-            
-            // Petición de eliminación de un producto de categoría favoritos
+            // Añadimos el producto de favoritos
+            await assignProductToCategory(product?.id, 'Favoritos')
+
+            // Cambiamos el estado del like y mandamos el modal de aviso
+            setLiked(true)
+            showModal(`${product?.name} se ha añadido a favoritos`)
+             
+        // Petición de eliminación de un producto de categoría favoritos
         }else{
             
-            // Modal de producto unlikeado
-            setUnlikeModal(true)
-            setTimeout( () => {
-                setUnlikeModal(false)
-            }, 3000)   
+            // Eliminamos el producto de favoritos
+            await removeProductFromCategory(product?.id, 'Favoritos')
+
+            // Si estamos viendo favoritos, actualizamos la lista
+            if (refreshProducts) {
+                await refreshProducts();
+            }
+
+            // Cambiamos el estado del like y mandamos el modal de aviso
+            setLiked(false)
+            showModal(`${product?.name} se ha eliminado de favoritos`)  
         }
-        
+
+        setTimeout(() => setModalProcessing(false), 3000);
     }
 
     // Función que añade al carito un producto
     function addAction() {
         
+        // Proteccion de spam de clics
+        if (modalProcessing) return;
+        setModalProcessing(true);
+
         // Petición que busca el producto añadido en el carrito
         
         // En caso de que no esté, petición de añadir el producto al carrito
 
-        // Modal de producto añadido
-        setAddModal(true)
-        setAdded(true)
-        setTimeout( () => {
-            setAddModal(false)
-            setAdded(false)
-        }, 3000)
 
+
+        // Modal de producto añadido
+        setAdded(true)
+        showModal(`${product?.name} se ha añadido al carrito`)
+        setTimeout(() => {
+            setAdded(false)
+            setModalProcessing(false);
+        }, 3000)
     }
 
     return (
 
         // Card del producto
-        
         <div className='product'>
-            { addModal && <Modal text={`${productName} se ha añadido al carrito`}></Modal>}
-            { unlikeModal && <Modal text={`${productName} se ha añadido a favoritos`}></Modal>}
-            { likeModal && <Modal text={`${productName} se ha eliminado de favoritos`}></Modal>}
 
             {/* Imágen del producto */}
             <div className='product-image'>
-                <img className='product-image-svg' src={productImage}/>
+                <img className='product-image-svg' src={product?.url_image}/>
             </div>
 
             {/* Nombre del producto */}
-            <h1 className='product-name'>{productName}</h1>
+            <h1 className='product-name'>{product?.name}</h1>
 
             {/* Precio del producto */}
-            <h2 className='product-price'>{productPrice} $</h2>
+            <h2 className='product-price'>{product?.price.toFixed(2)} $</h2>
 
             {/* Botones de los productos */}
             <div className='product-buttons'>
@@ -99,7 +121,7 @@ function InitProduct({productImage, productName, productPrice, showModal}) {
                 {/* Botón de añadir al carrito un producto */}
                 <div onClick={addAction} className='product-add'>
                     <h1>Add</h1>
-                    <img className={addClass} src={addSvg}/>
+                    <img className='product-add-svg' src={addSvg}/>
                 </div>
 
                 {/* Botón de añadir un producto a favoritos */}

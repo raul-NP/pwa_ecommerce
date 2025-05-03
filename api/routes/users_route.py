@@ -1,10 +1,10 @@
 from flask import Blueprint, request, jsonify
-from controllers.user_controller import show_all, insert_user, find_user_by_name
+from controllers.users_controller import show_all, insert_user, find_user_by_name
 from werkzeug.security import check_password_hash
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 import re
 
-user_bp = Blueprint('user', __name__)
+users_bp = Blueprint('users', __name__)
 
 # Listar todas las personas
 # @user_bp.route("/", methods=['GET'])
@@ -25,7 +25,7 @@ user_bp = Blueprint('user', __name__)
 #     return jsonify(user), 200
 
 # Recuperar usuario actual loggeado
-@user_bp.route("/me", methods=["GET"])
+@users_bp.route("/me", methods=["GET"])
 @jwt_required()  
 def get_current_user():
 
@@ -41,7 +41,7 @@ def get_current_user():
     return jsonify(user), 200
 
 # Insertar usuarios
-@user_bp.route("/", methods = ['POST'])
+@users_bp.route("/", methods = ['POST'])
 def post():
 
     # Datos provinientes del body
@@ -64,7 +64,7 @@ def post():
     return jsonify({"message": "Usuario registrado correctamente"}), 200 
 
 # Login del usuario 
-@user_bp.route("/login", methods = ['POST'])
+@users_bp.route("/login", methods = ['POST'])
 def login():
 
     try:
@@ -88,25 +88,3 @@ def login():
     except Exception as e:
         print(f"Error en login: {e}")
         return jsonify({"error": f"Error interno {e}"}), 500
-
-
-
-# Actualizamos usuarios
-@user_bp.route("/", methods=['PUT'])
-def put():
-    return
-
-    # updated_data = request.get_json()
-    # if update_data(updated_data):
-    #     return "Registro actualizado correctamente", 200
-    # return "El registro con ese id no existe", 404
-
-# Eliminamos usuarios
-@user_bp.route("/", methods=['DELETE'])
-def delete():
-    return
-
-    # deleted_data = request.get_json()
-    # if delete_data(deleted_data):
-    #     return "Registro eliminado correctamente", 200
-    # return "No existe el id del registro a eliminar", 404
