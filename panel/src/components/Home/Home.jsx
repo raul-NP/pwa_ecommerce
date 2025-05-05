@@ -90,7 +90,7 @@ function Home ({categories}) {
                 {/* Pagina Home*/}
                 { !categories && 
                     <div className='init-tittle'>
-                        Bienvenido/a, {capitalizeName(user?.name)}
+                        Welcome, {capitalizeName(user?.name)}
                     </div>
                 }
 
@@ -121,7 +121,7 @@ function Home ({categories}) {
 
             </div>
 
-            <button onClick={logout}>cerrar sesion</button>
+            {/* <button onClick={logout}>cerrar sesion</button> */}
 
             {/* Cuerpo con los productos de la aplicación */}
             <div className='products'>

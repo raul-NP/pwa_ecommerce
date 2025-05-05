@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request
-from controllers.products_controller import get_all, get_by_category, assign_product_to_category, remove_product_from_category
+from controllers.products_controller import get_by_category, assign_product_to_category, remove_product_from_category
+# from controllers.products_controller import get_all
 from flask_jwt_extended import jwt_required
 
 products_bp = Blueprint('products', __name__)

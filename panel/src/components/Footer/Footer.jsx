@@ -44,7 +44,7 @@ function Footer({n_products}) {
 
             {/* Perfil */}
             <div className='icon-card'>
-                <img onClick={() => navigate("/perfil")} id='perfil-svg' src={perfilSvg} />
+                <img onClick={() => navigate("/profile")} id='perfil-svg' src={perfilSvg} />
             </div>
         </nav>
     )

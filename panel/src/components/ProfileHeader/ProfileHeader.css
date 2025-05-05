@@ -1,0 +1,24 @@
+.profile-header-container{
+    padding: 1.5vh;
+    background-color: var(--quaternary);
+}
+
+.profile-header-card{
+    border-radius: 1.2vh;
+    height: 8vh;
+    background-color: var(--primary);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+}
+
+.profile-header-tittle{
+    width: 80vw;
+    font-size: 2.6vh;
+    color: var(--tertiary);
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-style: italic;
+    padding-left: 6vw;
+}

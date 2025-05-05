@@ -9,6 +9,7 @@ import SignInPage from '../../pages/SignInPage';
 import SignUpPage from '../../pages/SignUpPage';
 import HomePage from '../../pages/HomePage';
 import CategoriesPage from '../../pages/CategoriesPage';
+import ProfilePage from '../../pages/ProfilePage';
 
 // Protección de rutas
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
@@ -40,6 +41,12 @@ function App() {
         <Route path="/categories" element={
           <PrivateRoute>
             <CategoriesPage />
+          </PrivateRoute>
+        } />
+
+        <Route path="/profile" element={
+          <PrivateRoute>
+            <ProfilePage />
           </PrivateRoute>
         } />
 
