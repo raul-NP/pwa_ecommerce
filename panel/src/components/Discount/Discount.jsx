@@ -4,6 +4,7 @@ import './Discount.css'
 // Componentes
 import ProfileHeader from '../ProfileHeader/ProfileHeader';
 import Footer from '../Footer/Footer';
+import Modal from '../Modal/Modal';
 
 // Funcionalidad
 import { useEffect, useState } from 'react';
@@ -13,8 +14,10 @@ import { getCurrentUser, updateUser } from '../../services/api_service';
 function Discount() {
 
     const [user, setUser] = useState(null)
-    const [disabled, setDisabled] = useState(true)
     const [activeDiscount, setActiveDiscount] = useState(false)
+    const [noPointsModal, setNoPointsModal] = useState(false)
+    const [activeDiscountModal, setActiveDiscountModal] = useState(false)
+    const [successModal, setSuccessModal] = useState(false)
  
     useEffect(() => {
 
@@ -26,11 +29,6 @@ function Discount() {
             // Seteamos el estado del descuento
             const isDiscountActive = Boolean(user?.discount);
             setActiveDiscount(isDiscountActive);
-
-            // Comprobamos si el usuario puede optar al descuento
-            if (user?.points >= 0 && !isDiscountActive){
-                setDisabled(false)
-            }
         };
 
         fetchUser()
@@ -39,26 +37,56 @@ function Discount() {
 
     // Función para obtener el descuento
     async function getDiscount() {
-        
-        // Modificar el usuario 
-        const updatedUser = {
-            name: user?.name,
-            points: user?.points - 100,
-            discount: true
-        };
 
-        // En caso de fallo
-        if (! await updateUser(updatedUser)){
-            return
+        // Evitar spam de clics
+        if (activeDiscountModal || noPointsModal || successModal) return
+
+        // En caso de que el usuario tenga ya un descuento activo
+        if (activeDiscount){
+            
+            // Modal de aviso
+            setActiveDiscountModal(true);
+            setTimeout(() => {
+                setActiveDiscountModal(false)
+            }, 2000);
+            
+        // En caso de que el usuario no tenga los suficientes puntos
+        }else if(user?.points < 100){
+            
+            // Modal de aviso
+            setNoPointsModal(true);
+            setTimeout(() => {
+                setNoPointsModal(false)
+            }, 2000);
+
+        // Caso en que se aplica con éxito el descuento
+        }else{
+
+            // Modal de aviso
+            setSuccessModal(true);
+            setTimeout(() => {
+                setSuccessModal(false)
+            }, 2000);
+
+            // Modificar el usuario 
+            const updatedUser = {
+                name: user?.name,
+                points: user?.points - 100,
+                discount: true
+            };
+
+            // En caso de fallo
+            if (! await updateUser(updatedUser)){
+                return
+            }
+
+            // Activamos el descuento activo y deshabilitamos el botón
+            setActiveDiscount(true)
+
+            // Refrescamos los puntos
+            const refreshUser = await getCurrentUser()
+            setUser(refreshUser)
         }
-
-        // Activamos el descuento activo y deshabilitamos el botón
-        setActiveDiscount(true)
-        setDisabled(true)
-
-        // Refrescamos los puntos
-        const refreshUser = await getCurrentUser()
-        setUser(refreshUser)
     }
 
     return (
@@ -71,6 +99,10 @@ function Discount() {
             {/* Cuerpo de la página descuentos */}
             <div className='discount-body'>
 
+            { noPointsModal && <Modal text={'Debes tener más de 100 puntos para obtener el descuento'} type={'cross'}></Modal>}
+            { activeDiscountModal && <Modal text={'Ya hay un descuento activo'} type={'cross'}></Modal>}
+            { successModal && <Modal text={'El descuento se ha aplicado con éxito'}></Modal>}
+
                 {/* Puntos del usuario */}
                 <div className='discount-points'>
                     <p>You have accumulated:</p>
@@ -79,7 +111,7 @@ function Discount() {
 
                 {/* Botón para conseguir tu descuento */}
                 <div className='discount-button'>
-                    <button disabled={disabled} onClick={getDiscount}>¡GET DISCOUNT!</button>
+                    <button onClick={getDiscount}>¡GET DISCOUNT!</button>
                 </div>
 
                 {/* Mensaje del estado del descuento */}
