@@ -1,6 +1,7 @@
 .discount-body{
+    position: relative;
     height: 81vh;
-    background-color: var(--tertiary);
+    background-color: var(--quaternary);
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
     color: var(--primary);
