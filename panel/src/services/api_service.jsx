@@ -64,6 +64,27 @@ export async function registerUser(user) {
 
     return await response.json();
 }
+
+// Función que edita un usuario en la base de datos
+export async function updateUser(user) {
+    const token = getToken();
+
+    const response = await fetch(`${API_URL}/users/`, {
+        method: 'PUT',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(user)
+    });
+
+    // En caso de error
+    if (response.status !== 200) {
+        return false;
+    }
+
+    return await response.json();
+}
   
 // Función que verifica si el usuario y contraseña son válidos
 export async function login(name, password) {

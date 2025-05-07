@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from controllers.users_controller import show_all, insert_user, find_user_by_name
+from controllers.users_controller import show_all, insert_user, find_user_by_name, update_user_by_name
 from werkzeug.security import check_password_hash
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 import re
@@ -62,6 +62,40 @@ def post():
 
     insert_user(name, password, rol, points)
     return jsonify({"message": "Usuario registrado correctamente"}), 200 
+
+# Modificar un usuario
+@users_bp.route("/", methods=["PUT"])
+def update_user():
+    try:
+        # Recogemos el usuario nuevo a editar
+        new_user = request.get_json()
+
+        # Caso en el que no se introduce el nombre en el body
+        name = new_user.get("name")
+        if not name:
+            return jsonify({"error": "El campo 'name' es obligatorio"}), 400
+
+        # Caso en el que no se encuentra el usuario
+        user = find_user_by_name(name)
+        if not user:
+            return jsonify({"error": "Usuario no encontrado"}), 404
+
+        # Si viene nueva contraseña, se hashea
+        if "password" in new_user:
+            from werkzeug.security import generate_password_hash
+            new_user["password"] = generate_password_hash(new_user["password"])
+
+        # Evita que se edite el id
+        new_user.pop("id", None) 
+
+        # Actualizamos el usuario
+        update_user_by_name(name, new_user)
+
+        return jsonify({"message": "Usuario actualizado correctamente"}), 200
+
+    except Exception as e:
+        return jsonify({"error": f"Error al actualizar: {str(e)}"}), 500
+
 
 # Login del usuario 
 @users_bp.route("/login", methods = ['POST'])

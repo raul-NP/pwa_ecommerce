@@ -53,3 +53,24 @@ def find_user_by_name(name):
     cursor.close()
     db.close()
     return user
+
+# Función para actualizar los campos de un usuario por su nombre
+def update_user_by_name(name, fields: dict):
+
+    # Abrimos la conexion
+    db = get_db_connection()
+    cursor = db.cursor()
+
+    # Recopilamos los campos a setear
+    set_clause = ", ".join(f"{key} = %s" for key in fields.keys())
+    values = list(fields.values())
+    values.append(name)
+
+    # Realizamos la consulta de actualizacion del usuario
+    query = f"UPDATE users SET {set_clause} WHERE name = %s"
+    cursor.execute(query, values)
+
+    # Cerramos conexion
+    db.commit()
+    cursor.close()
+    db.close()

@@ -70,6 +70,12 @@ function Home ({categories}) {
 
     return (
 
+        // -------------------------------------
+        // OSCURECER EL PRODUCTO SI NO HAY STOCK
+        // LOGICA DE AÑADIDO AL CARRITO
+        // VISTA DE PRODUCTO CON SU DESCRIPCION
+        // -------------------------------------
+
         // Pantalla completa
         <div className='init-card'>
 
