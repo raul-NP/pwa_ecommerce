@@ -10,6 +10,10 @@ import SignUpPage from '../../pages/SignUpPage';
 import HomePage from '../../pages/HomePage';
 import CategoriesPage from '../../pages/CategoriesPage';
 import ProfilePage from '../../pages/ProfilePage';
+import OrderPage from '../../pages/OrderPage';
+import DiscountPage from '../../pages/DiscountPage';
+import ChangePasswordPage from '../../pages/ChangePasswordPage';
+import AdminPanelPage from '../../pages/AdminPanelPage';
 
 // Protección de rutas
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
@@ -47,6 +51,30 @@ function App() {
         <Route path="/profile" element={
           <PrivateRoute>
             <ProfilePage />
+          </PrivateRoute>
+        } />
+
+        <Route path="/profile/orders" element={
+          <PrivateRoute>
+            <OrderPage />
+          </PrivateRoute>
+        } />
+
+        <Route path="/profile/discounts" element={
+          <PrivateRoute>
+            <DiscountPage />
+          </PrivateRoute>
+        } />
+
+        <Route path="/profile/password" element={
+          <PrivateRoute>
+            <ChangePasswordPage />
+          </PrivateRoute>
+        } />
+
+        <Route path="/profile/admin" element={
+          <PrivateRoute>
+            <AdminPanelPage />
           </PrivateRoute>
         } />
 

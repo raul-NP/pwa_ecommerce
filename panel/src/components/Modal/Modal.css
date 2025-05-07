@@ -1,6 +1,5 @@
 .container{
-    animation-name: appear;
-    animation-duration: 3s;
+    animation: appear 2s forwards;
     position: fixed;
     right: 1vw;
     opacity: 1;

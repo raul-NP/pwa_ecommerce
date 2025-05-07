@@ -1,12 +1,12 @@
 .profile-header-container{
     padding: 1.5vh;
-    background-color: var(--quaternary);
+    background-color: var(--tertiary);
 }
 
 .profile-header-card{
     border-radius: 1.2vh;
     height: 8vh;
-    background-color: var(--primary);
+    background-color: var(--secondary);
     display: flex;
     flex-direction: row;
     align-items: center;

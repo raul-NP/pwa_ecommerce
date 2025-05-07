@@ -64,7 +64,7 @@ function Login ({signIn}) {
                 setPasswordModal(true)
                 setTimeout( () => {
                     setPasswordModal(false)
-                }, 3000)
+                }, 2000)
 
             // Comprobamos registro
             }else{
@@ -84,7 +84,7 @@ function Login ({signIn}) {
                     setCharsModal(true)
                     setTimeout( () => {
                         setCharsModal(false)
-                    }, 3000)
+                    }, 2000)
 
                 // Caso en el que el nombre de usuario ya existe
                 }else if (! await registerUser(newUser)){
@@ -93,7 +93,7 @@ function Login ({signIn}) {
                     setExistModal(true)
                     setTimeout( () => {
                         setExistModal(false)
-                    }, 3000)
+                    }, 2000)
                     
                 // Registro con éxito
                 }else{
@@ -102,12 +102,12 @@ function Login ({signIn}) {
                     setSuccessModal(true)
                     setTimeout( () => {
                         setSuccessModal(false)
-                    }, 3000)
+                    }, 2000)
                     
                     // Navegamos al login
                     setTimeout( () => {
                         navigate("/")
-                    }, 2500)
+                    }, 2000)
                 }
             }
         }
@@ -132,7 +132,7 @@ function Login ({signIn}) {
                 setIncorrectModal(true);
                 setTimeout(() => {
                     setIncorrectModal(false)
-                }, 3000);
+                }, 2000);
 
             // Login con éxito
             }else{

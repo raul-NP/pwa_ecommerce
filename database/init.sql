@@ -102,7 +102,7 @@ INSERT INTO product_categories (id_product, id_category) VALUES
 
 -- Insertar usuario administrador
 INSERT INTO users (name, password, rol, points) VALUES
-('admin', 'admin', 'admin', 0);
+('admin', 'scrypt:32768:8:1$mvgrN7FRdTKWPy63$04f52bb54ba8aa88f225eac9e702de8f8651365073e5c2be6101eab833907798ba5ebb6aaf0d8e57b6ae9353a70b8f87a848ee3a6d175d7ea40ab462c0b51acd', 'admin', 0);
 
 -- Insertar carrito para el admin
 INSERT INTO carts (id_user) VALUES (1);

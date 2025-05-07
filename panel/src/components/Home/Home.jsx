@@ -65,15 +65,7 @@ function Home ({categories}) {
     // Función para mostrar los modales
     const showModal = (text) => {
         setModalText(text);
-        setTimeout(() => setModalText(null), 3000);
-    };
-
-    // Cierre de sesión del usuario
-    const navigate = useNavigate()
-    const logout = () => {
-        localStorage.removeItem("token");
-        setUser(null);
-        navigate("/")
+        setTimeout(() => setModalText(null), 2000);
     };
 
     return (
@@ -120,8 +112,6 @@ function Home ({categories}) {
                 }
 
             </div>
-
-            {/* <button onClick={logout}>cerrar sesion</button> */}
 
             {/* Cuerpo con los productos de la aplicación */}
             <div className='products'>

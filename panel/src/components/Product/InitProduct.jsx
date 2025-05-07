@@ -74,7 +74,7 @@ function InitProduct({product, showModal, modalProcessing, setModalProcessing, r
             showModal(`${product?.name} se ha eliminado de favoritos`)  
         }
 
-        setTimeout(() => setModalProcessing(false), 3000);
+        setTimeout(() => setModalProcessing(false), 2000);
     }
 
     // Función que añade al carito un producto
@@ -96,7 +96,7 @@ function InitProduct({product, showModal, modalProcessing, setModalProcessing, r
         setTimeout(() => {
             setAdded(false)
             setModalProcessing(false);
-        }, 3000)
+        }, 2000)
     }
 
     return (
