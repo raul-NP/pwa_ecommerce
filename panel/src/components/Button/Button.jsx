@@ -1,9 +1,9 @@
 
 // Botón genérico para toda la aplicación
-function Button ({ onClick, width, height, borderColor, borderWidth, text}){
+function Button ({ onClick, width, height, borderColor, borderWidth, text, className}){
     
     return (
-        <button onClick={onClick} style={{    
+        <button className={className} onClick={onClick} style={{    
             width: width,
             height: height,
             borderColor: borderColor,

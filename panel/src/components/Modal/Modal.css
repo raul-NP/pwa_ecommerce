@@ -19,6 +19,7 @@
     padding-right: 2vh;
     padding-top: 1vh;
     padding-bottom: 1vh;
+    z-index: 999;
 }
 h1{
     font-size: 1.7vh;

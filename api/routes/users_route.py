@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from controllers.users_controller import show_all, insert_user, find_user_by_name, update_user_by_name
-from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 import re
 
@@ -82,7 +82,6 @@ def update_user():
 
         # Si viene nueva contraseña, se hashea
         if "password" in new_user:
-            from werkzeug.security import generate_password_hash
             new_user["password"] = generate_password_hash(new_user["password"])
 
         # Evita que se edite el id
@@ -122,3 +121,30 @@ def login():
     except Exception as e:
         print(f"Error en login: {e}")
         return jsonify({"error": f"Error interno {e}"}), 500
+
+# Chekeamos la contraseña de un usuario
+@users_bp.route("/check-password", methods=["POST"])
+@jwt_required()
+def check_password():
+    try:
+        # Obtener los datos del body
+        data = request.get_json()
+        name = data.get("name")
+        password = data.get("password")
+
+        if not name or not password:
+            return jsonify({"error": "Campos 'name' y 'password' son obligatorios"}), 400
+
+        # Buscar el usuario
+        user = find_user_by_name(name)
+        if not user:
+            return jsonify({"error": "Usuario no encontrado"}), 404
+
+        # Comparar la contraseña
+        if check_password_hash(user['password'], password):
+            return jsonify({"match": True}), 200
+        else:
+            return jsonify({"match": False}), 409
+
+    except Exception as e:
+        return jsonify({"error": f"Error al verificar contraseña: {str(e)}"}), 500

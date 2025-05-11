@@ -147,11 +147,11 @@ function Login ({signIn}) {
         <div className='principal-card'>
 
             {/* Modales de validación y errores */}
-            { charsModal && <Modal text={'El nombre de usuario debe contener únicamente letras'} type={'cross'}></Modal>}
-            { passwordModal && <Modal text={'Las contraseñas deben ser idénticas'} type={'cross'}></Modal>}
-            { existModal && <Modal text={'Ya existe un usuario con ese nombre'} type={'cross'}></Modal>}
-            { successModal && <Modal text={'Usuario registrado con éxito'}></Modal>}
-            { incorrectModal && <Modal text={'Usuario o contraseña incorrectos'} type={'cross'}></Modal>}
+            { charsModal && <Modal text={'The username must contain only letters'} type={'cross'}></Modal>}
+            { passwordModal && <Modal text={'Passwords must be identical'} type={'cross'}></Modal>}
+            { existModal && <Modal text={'A user with that name already exists.'} type={'cross'}></Modal>}
+            { successModal && <Modal text={'User successfully registered'}></Modal>}
+            { incorrectModal && <Modal text={'Incorrect username or password'} type={'cross'}></Modal>}
 
             {/* Título */}
             <div className='header'>

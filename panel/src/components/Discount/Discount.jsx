@@ -99,9 +99,9 @@ function Discount() {
             {/* Cuerpo de la página descuentos */}
             <div className='discount-body'>
 
-            { noPointsModal && <Modal text={'Debes tener más de 100 puntos para obtener el descuento'} type={'cross'}></Modal>}
-            { activeDiscountModal && <Modal text={'Ya hay un descuento activo'} type={'cross'}></Modal>}
-            { successModal && <Modal text={'El descuento se ha aplicado con éxito'}></Modal>}
+            { noPointsModal && <Modal text={'You must have more than 100 points to get the discount'} type={'cross'}></Modal>}
+            { activeDiscountModal && <Modal text={'There is already an active discount'} type={'cross'}></Modal>}
+            { successModal && <Modal text={'The discount has been applied successfully'}></Modal>}
 
                 {/* Puntos del usuario */}
                 <div className='discount-points'>

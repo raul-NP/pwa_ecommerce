@@ -56,7 +56,7 @@ function InitProduct({product, showModal, modalProcessing, setModalProcessing, r
 
             // Cambiamos el estado del like y mandamos el modal de aviso
             setLiked(true)
-            showModal(`${product?.name} se ha añadido a favoritos`)
+            showModal(`${product?.name} has been added to favorites`)
              
         // Petición de eliminación de un producto de categoría favoritos
         }else{
@@ -71,7 +71,7 @@ function InitProduct({product, showModal, modalProcessing, setModalProcessing, r
 
             // Cambiamos el estado del like y mandamos el modal de aviso
             setLiked(false)
-            showModal(`${product?.name} se ha eliminado de favoritos`)  
+            showModal(`${product?.name} has been removed from favorites`)  
         }
 
         setTimeout(() => setModalProcessing(false), 2000);
@@ -92,7 +92,7 @@ function InitProduct({product, showModal, modalProcessing, setModalProcessing, r
 
         // Modal de producto añadido
         setAdded(true)
-        showModal(`${product?.name} se ha añadido al carrito`)
+        showModal(`${product?.name} has been added to the cart`)
         setTimeout(() => {
             setAdded(false)
             setModalProcessing(false);

@@ -74,24 +74,24 @@ CREATE TABLE order_products (
     id INT AUTO_INCREMENT PRIMARY KEY,
     id_product INT,
     id_order INT,
-    quantity INT DEFAULT 1,
+    quantity INT,
     FOREIGN KEY (id_product) REFERENCES products(id),
     FOREIGN KEY (id_order) REFERENCES orders(id)
 );
 
 -- Insertar productos
 INSERT INTO products (name, price, stock, url_image, description) VALUES
-('Reloj deepsea', 450.00, 10, 'https://www.rabat.net/media/catalog/product/r/o/rolex-deepsea-m136660-0005.png', 'Reloj rolex deepsea de Acero Oystersteel y esfera color d-blue'),
-('Pulsera plata', 620.00, 5, 'https://dimequemequieres.net/cdn/shop/products/pulsera-aline-plata-producto_569cd8aa-4d16-48b1-a90e-f3790082e968.png?v=1743504391&width=1500', 'Pulsera de plata de ley 925 milesimas');
+('Deepsea Watch', 450.00, 10, 'https://www.rabat.net/media/catalog/product/r/o/rolex-deepsea-m136660-0005.png', 'Rolex Deepsea watch in Oystersteel with a D-Blue dial'),
+('Silver Bracelet', 620.00, 5, 'https://dimequemequieres.net/cdn/shop/products/pulsera-aline-plata-producto_569cd8aa-4d16-48b1-a90e-f3790082e968.png?v=1743504391&width=1500', '925 sterling silver bracelet');
 
 -- Insertar categorías
 INSERT INTO categories (name) VALUES
-('Todos'),
-('Relojes'),
-('Anillos'),
-('Collares'),
-('Pulseras'),
-('Favoritos');
+('All'),
+('Watches'),
+('Rings'),
+('Necklaces'),
+('Bracelets'),
+('Favourites');
 
 -- Relacionar productos con categorías
 INSERT INTO product_categories (id_product, id_category) VALUES

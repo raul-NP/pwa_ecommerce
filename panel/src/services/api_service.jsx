@@ -105,6 +105,27 @@ export async function login(name, password) {
     return true
 }
 
+// Funcion que verifica la contraseña del usuario
+export async function checkPassword(name, password) {
+    const token = getToken();
+    
+    const response = await fetch(`${API_URL}/users/check-password`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name, password })
+    })
+
+    // Contraseña del usuario incorrecta
+    if (response.status != 200){
+        return false 
+    }
+    
+    return true
+}
+
 // ------------------- CATEGORÍAS --------------------
 
 // Recupera todas las categorías
