@@ -1,7 +1,7 @@
 .menu{
     width: 100vw;
     justify-self: end;
-    background-color: var(--primary);
+    background-color: var(--secondary);
     height: 8vh;
     display: flex;
     flex-direction: row;

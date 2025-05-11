@@ -14,6 +14,7 @@ import OrderPage from '../../pages/OrderPage';
 import DiscountPage from '../../pages/DiscountPage';
 import ChangePasswordPage from '../../pages/ChangePasswordPage';
 import AdminPanelPage from '../../pages/AdminPanelPage';
+import CartPage from '../../pages/CartPage';
 
 // Protección de rutas
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
@@ -75,6 +76,12 @@ function App() {
         <Route path="/profile/admin" element={
           <PrivateRoute>
             <AdminPanelPage />
+          </PrivateRoute>
+        } />
+
+        <Route path="/cart" element={
+          <PrivateRoute>
+            <CartPage />
           </PrivateRoute>
         } />
 

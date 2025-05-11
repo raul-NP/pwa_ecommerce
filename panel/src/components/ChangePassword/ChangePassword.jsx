@@ -113,7 +113,7 @@ function ChangePassword() {
             {/* Cabecera del perfil */}
             <ProfileHeader user={user}></ProfileHeader>
 
-            {/* Cuerpo de la página descuentos */}
+            {/* Cuerpo de la página Cambio de contraseña */}
             <div className='change-password-body'>
 
                 {/* Modales de validación y errores */}
