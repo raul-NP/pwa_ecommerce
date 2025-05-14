@@ -206,3 +206,85 @@ export async function removeProductFromCategory(id_product, category_name) {
     return await response.json();
 }
 
+// ------------------- CARRITO --------------------
+
+// Función que recupera los productos del carrito
+export async function getCartProducts(username) {
+    const token = getToken();
+
+    const response = await fetch(`${API_URL}/carts/${username}`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
+
+    // Caso de error
+    if (!response.ok) {
+        return [];
+    }
+
+    return await response.json();
+}
+
+// Función que crea o añade producto al carrito
+export async function addProductCart(product_name, username, add = false) {
+    const token = getToken();
+
+    const response = await fetch(`${API_URL}/carts/add`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ product_name, username, add })
+    });
+
+    // Caso de error
+    if (!response.ok) {
+        return false;
+    }
+
+    return await response.json();
+}
+
+// Función que resta la cantidad en uno de un producto del carrito
+export async function substractProductCart(product_name, username) {
+    const token = getToken();
+
+    const response = await fetch(`${API_URL}/carts/substract`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ product_name, username })
+    });
+
+    // Caso de error
+    if (!response.ok) {
+        return false;
+    }
+
+    return await response.json();
+}
+
+// Elimina del carrito un producto
+export async function deleteProductFromCart(product_name, username) {
+    const token = getToken();
+
+    const response = await fetch(`${API_URL}/carts/delete`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ product_name, username })
+    });
+
+    // Caso de error
+    if (!response.ok) {
+        return false;
+    }
+
+    return await response.json();
+}

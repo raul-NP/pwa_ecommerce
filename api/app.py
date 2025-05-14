@@ -3,6 +3,7 @@ from flask_cors import CORS
 from routes.users_route import users_bp
 from routes.categories_routes import categories_bp
 from routes.products_routes import products_bp
+from routes.carts_routes import carts_bp
 from flask_jwt_extended import JWTManager\
 
 
@@ -28,6 +29,9 @@ app.register_blueprint(categories_bp, url_prefix = "/categories")
 
 # Blueprint de los productos del ecommerce
 app.register_blueprint(products_bp, url_prefix = "/products")
+
+# Blueprint de los carritos de usuario del ecommerce
+app.register_blueprint(carts_bp, url_prefix = "/carts")
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

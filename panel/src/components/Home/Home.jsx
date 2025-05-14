@@ -23,7 +23,7 @@ function Home ({categories}) {
     const [user, setUser] = useState(null);
     const [products, setProducts] = useState([]);
     const [categoriesName, setCategoriesName] = useState([]);
-    const [currentCategory, setCurrentCategory] = useState('Todos');
+    const [currentCategory, setCurrentCategory] = useState('All');
     const [modalText, setModalText] = useState(null);
     const [modalProcessing, setModalProcessing] = useState(false);
 
@@ -146,11 +146,12 @@ function Home ({categories}) {
                                 <InitProduct 
                                     key={product?.id} 
                                     showModal={showModal} 
-                                    product={product} 
+                                    product={product}
+                                    userName={user?.name} 
                                     modalProcessing={modalProcessing} 
                                     setModalProcessing={setModalProcessing} 
                                     refreshProducts={refreshProducts} 
-                                    isFavoritesView={categories && currentCategory === "Favoritos"}
+                                    isFavoritesView={categories && currentCategory === "Favourites"}
                                 />
                             ))}
                         </div>

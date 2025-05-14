@@ -4,11 +4,12 @@ import './Cart.css'
 // Componentes
 import ProfileHeader from '../ProfileHeader/ProfileHeader';
 import Footer from '../Footer/Footer';
+import Button from '../Button/Button';
+import CartProduct from '../Product/CartProduct';
 
 // Funcionalidad
 import { useEffect, useState } from 'react';
-import { getCurrentUser } from '../../services/api_service';
-import Button from '../Button/Button';
+import { getCartProducts, getCurrentUser } from '../../services/api_service';
 
 // Imagenes
 
@@ -16,26 +17,40 @@ import Button from '../Button/Button';
 // Página de login donde el usuario inicia sesión
 function Cart() {
 
-    
     const [user, setUser] = useState(null)
-    const [total, setTotal] = useState(null)
-    const [quantity, setQuantity] = useState(null)
+    const [products, setProducts] = useState([])
+    const [total, setTotal] = useState(0)
+    const [totalQuantity, setTotalQuantity] = useState(0)
 
     // Modales
     
  
-    // Datos del usuario
+    // Cargar usuario  refresco de carrito
     useEffect(() => {
+        const fetchData = async () => {
+            const currentUser = await getCurrentUser()
+            setUser(currentUser)
+            refreshCart(currentUser)
+        }
+        fetchData()
+    }, [])
 
-        // Datos del usuario
-        const fetchUser = async () => {
-            const user = await getCurrentUser()
-            setUser(user)
-        };
+    // Función que refresca el carrito (productos, totales ...)
+    const refreshCart = async (currentUser) => {
+        if (currentUser?.name) {
 
-        fetchUser()
+            // Obtenemos los productos
+            const cartProducts = await getCartProducts(currentUser.name);
+            setProducts(cartProducts);
 
-    }, []);
+            // Calcular total y cantidad
+            const calculatedTotal = cartProducts.reduce((sum, p) => sum + p.price * p.quantity, 0);
+            const calculatedQuantity = cartProducts.reduce((sum, p) => sum + p.quantity, 0);
+
+            setTotal(calculatedTotal.toFixed(2));
+            setTotalQuantity(calculatedQuantity);
+        }
+    };
 
     // Funcion de ir al pago de productos
     function payment() {
@@ -55,12 +70,17 @@ function Cart() {
                 {/* Cuerpo del carrito */}
                 <div className='cart-body'>
                     
-                    <h1>Products ({quantity})</h1>
+                    <h1>Products ({totalQuantity})</h1>
 
                     {/* Productos del carrito */}
                     <div className='cart-products'>
 
                         {/* Cada uno de los productos */}
+                        {products.length > 0 &&
+                            products.map((product) => (
+                                <CartProduct key={product.id} product={product} quantity={product.quantity} userName={user?.name} refreshCart={refreshCart}/>
+                            ))
+                        }
 
                     </div>
 

@@ -16,6 +16,8 @@ function Footer({n_products}) {
     
     const navigate = useNavigate()
 
+    // Useeffect para sacar cantidad de productos en el carrito
+
     return(
         
         // Menú de navegación

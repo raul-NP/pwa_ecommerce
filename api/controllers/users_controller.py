@@ -33,6 +33,12 @@ def insert_user(name, password, rol, points):
     hashed_pw = generate_password_hash(password)
     cursor.execute("INSERT INTO users (name, password, rol, points) VALUES (%s, %s, %s, %s)", (name, hashed_pw, rol, points))
     
+    # Recuperamos el id del usuario creado y creamos su carrito
+    user_id = cursor.lastrowid
+    cursor.execute(
+        "INSERT INTO carts (id_user) VALUES (%s)", (user_id,)
+    )
+
     # Cerramos las conexiones
     db.commit()
     cursor.close()

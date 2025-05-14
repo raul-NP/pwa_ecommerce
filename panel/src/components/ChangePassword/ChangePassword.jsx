@@ -145,6 +145,12 @@ function ChangePassword() {
 
                 </form>
 
+                {/* Texto de cambio de contraseñas */}
+                <div className='change-password-text'>
+                    <h1>Remember to keep </h1>
+                    <h1>your passwords safe</h1>
+                </div>
+
             </div>
 
             {/* Footer general */}

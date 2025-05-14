@@ -1,0 +1,92 @@
+.cart-product-container{
+    width: 83vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding-bottom: 0.6vh;
+    padding-top: 1.5vh;
+}
+
+.cart-product-card{
+    background-color: var(--quaternary);
+    width: 80%;
+    height: 8vh;
+    border-radius: 2vh;
+    display: flex;
+    flex-direction: row;
+}
+
+.cart-product-img{
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.cart-product-img img{
+    width: 5vh;
+}
+.cart-product-data{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 35%;
+
+}
+.cart-product-data h1{
+    color: var(--primary);
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+}
+#product-name{
+    font-size: 1.8vh;
+}
+#product-price{
+    font-size: 2vh;
+    font-weight: 700;
+}
+
+
+.cart-product-control{
+    width: 40%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    margin-right: 1vh;
+}
+
+.cart-product-add, .cart-product-substract{
+    background-color: var(--secondary);
+    display: flex;
+    width: 2.3vh;
+    height: 2.3vh;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color: var(--quaternary);
+    font-size: 2.2vh;
+}
+.cart-product-quantity{
+    background-color: var(--secondary);
+    width: 5vh;
+    height: 5vh;
+    display: flex;
+    justify-content: center;
+    color: var(--quaternary);
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 3vh;
+    border-radius: 50%;
+}
+
+.cart-product-trash{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 15%;
+}
+
+.cart-product-trash img {
+    width: 4vh;
+    cursor: pointer;
+}
