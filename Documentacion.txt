@@ -5,3 +5,14 @@ EN CASO DE LANZAR CON MAQUINA VIRTUAL: EXPONER EL PUERTO PARA QUE SEA HTTPS
 
 SCRIPT RÁPIDO PARA LEVANTAR DB Y API
     - docker compose down -v && docker image prune -af && docker compose up -d --build api db
+
+TAREAS
+    - Crear carrito al crear usuario
+    - Crear ruta para ver si esta un producto en una categoria
+    - vista carrito
+    - Vista ordenes
+    - Vista panel admin
+    - Vista producto
+    - Expiracion de token
+    - Cambiar lógica de favoritos
+    - Cambiar a produccion todo, en docker compose
