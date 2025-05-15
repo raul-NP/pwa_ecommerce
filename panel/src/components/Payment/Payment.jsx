@@ -33,6 +33,10 @@ function Payment() {
         fetchData()  
     }, []);
 
+    // Comprobar en el back al hacer la resta si hay stock suficiente, si no modal y recargar pagina,
+    // dejando el stock que haya y si no hay stock eliminarlo de los productos del carrito
+    // No dejar pagar si no hay productos en la pasarela de pago
+
     return (
 
         <div>
