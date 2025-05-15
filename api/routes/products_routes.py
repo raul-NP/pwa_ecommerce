@@ -25,6 +25,23 @@ def get_category_products(category_name):
 
     return jsonify(products), 200
 
+# Verificar si un producto pertenece a una categoría
+@products_bp.route("/<string:category_name>/check/<int:id_product>", methods=["GET"])
+@jwt_required()
+def check_product_in_category(category_name, id_product):
+    
+    # Obtenemos los productos de la categoría
+    products = get_by_category(category_name)
+
+    # Buscar si el producto existe
+    exists = any(p["id"] == id_product for p in products)
+
+    return jsonify({
+        "category": category_name,
+        "id_product": id_product,
+        "exists": exists
+    }), 200
+
 # Asignamos un producto a una categoría
 @products_bp.route("/<string:category_name>", methods=["POST"])
 @jwt_required()

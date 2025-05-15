@@ -12,7 +12,7 @@ import check from '../../assets/imgs/check_2.svg';
 
 // Funcionalidad
 import { useEffect, useState } from 'react';
-import { addProductCart, assignProductToCategory, removeProductFromCategory } from '../../services/api_service';
+import { addProductCart, assignProductToCategory, checkProductInCategory, removeProductFromCategory } from '../../services/api_service';
 
 function InitProduct({product, userName, showModal, modalProcessing, setModalProcessing, refreshProducts }) {
 
@@ -25,15 +25,14 @@ function InitProduct({product, userName, showModal, modalProcessing, setModalPro
 
         // Observamos si el producto ya estaba en favoritos, para cambiar el estado de favorito
         const checkLiked = async () => {
-            const response = await assignProductToCategory(product?.id, 'Favourites')
+            const response = await checkProductInCategory(product?.id, 'Favourites')
             
             // Caso en el que ya esta en favoritos el producto
-            if (!response){
+            if (response){
                 setLiked(true)
 
             // Caso contrario
             }else{
-                await removeProductFromCategory(product?.id, 'Favourites')
                 setLiked(false)
             }
         };

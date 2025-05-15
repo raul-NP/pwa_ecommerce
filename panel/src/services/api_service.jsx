@@ -166,6 +166,21 @@ export async function getProductsByCategory(categoryName) {
     return response.json();
 }
 
+// Verifica si un producto pertenece a una categoría
+export async function checkProductInCategory(idProduct, categoryName) {
+    const token = getToken();
+
+    const response = await fetch(`${API_URL}/products/${categoryName}/check/${idProduct}`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
+
+    const result = await response.json();
+    return result.exists; 
+}
+
 // Asigna un producto a una categoría
 export async function assignProductToCategory(id_product, category_name) {
     const token = getToken();

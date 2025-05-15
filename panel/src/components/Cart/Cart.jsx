@@ -53,8 +53,11 @@ function Cart() {
 
     // Refresco de productos
     async function refreshCart() {
-        const refreshProducts = await getCartProducts(user?.name);
-        setProducts(refreshProducts);
+
+        if (user?.name){
+            const refreshProducts = await getCartProducts(user.name);
+            setProducts(refreshProducts);
+        }
     }
 
     // Función para mostrar los modales
