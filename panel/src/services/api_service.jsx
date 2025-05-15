@@ -43,6 +43,12 @@ export async function getCurrentUser() {
         }
     })
 
+    // Caso de expiracion de token
+    if (response.status === 401) {
+        localStorage.removeItem("token")
+        return null
+    }
+
     return response.json();
 }
 
