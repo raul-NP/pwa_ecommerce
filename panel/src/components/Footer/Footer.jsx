@@ -10,13 +10,41 @@ import perfilSvg from '../../assets/imgs/user.svg';
 
 // Funcionalidad
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { getCartProducts, getCurrentUser } from '../../services/api_service';
 
 // Footer de navegación de la aplicación
-function Footer({n_products}) {
+function Footer() {
     
     const navigate = useNavigate()
+    const [nProducts, setNProducts] = useState()
 
-    // Useeffect para sacar cantidad de productos en el carrito
+    // Cantidad de productos del carrito
+    useEffect(() => {
+        
+        const loadCartCount = async () => {
+            const user = await getCurrentUser();
+            const cart = await getCartProducts(user.name);
+            setNProducts(cart.length);
+        }
+
+        // Cargar al inicio
+        loadCartCount()
+
+        // Escuchar evento global
+        const handleCartUpdate = () => {
+            loadCartCount()
+        }
+
+        // Añadimos escucha de un evento global y al escuchar actualizamos
+        window.addEventListener("cartUpdated", handleCartUpdate)
+
+        // Limpieza del listener
+        return () => {
+            window.removeEventListener("cartUpdated", handleCartUpdate)
+        }
+
+    }, []);
 
     return(
         
@@ -41,7 +69,7 @@ function Footer({n_products}) {
             {/* Cart */}
             <div className='icon-card'>
                 <img onClick={() => navigate("/cart")} id='cart-svg' src={cartSvg} />
-                { n_products && n_products != 0 && <div id='n-products'>{n_products}</div>}
+                { nProducts > 0 && <div id='n-products'>{nProducts}</div>}
             </div>
 
             {/* Perfil */}

@@ -23,6 +23,11 @@ function CartProduct({product, quantity, userName, refreshCart, showModal, modal
 
         // Borramos el producto del carrito
         await deleteProductFromCart(product?.name, userName)
+
+        // Refrescamos en el footer el numero de producos del carrito
+        window.dispatchEvent(new CustomEvent("cartUpdated"))
+
+        // Refrescamos el carrito
         refreshCart()
     }
 

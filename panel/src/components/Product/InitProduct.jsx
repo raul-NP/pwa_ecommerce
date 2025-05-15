@@ -85,6 +85,9 @@ function InitProduct({product, userName, showModal, modalProcessing, setModalPro
 
         // En caso de que no esté, petición de añadir el producto al carrito
         await addProductCart(product?.name, userName)
+        
+        // Damos feedback al footer para que actualice el número de productos en el carrito
+        window.dispatchEvent(new CustomEvent("cartUpdated"))
 
         // Modal de producto añadido
         setAdded(true)
