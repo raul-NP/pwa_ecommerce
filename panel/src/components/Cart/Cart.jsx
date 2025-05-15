@@ -10,7 +10,7 @@ import Modal from '../Modal/Modal';
 
 // Funcionalidad
 import { useEffect, useState } from 'react';
-import { getCartProducts, getCurrentUser } from '../../services/api_service';
+import { deleteProductFromCart, getCartProducts, getCurrentUser, getProductsByCategory } from '../../services/api_service';
 
 // Imagenes
 
@@ -31,8 +31,17 @@ function Cart() {
 
         const fetchData = async () => {
             const currentUser = await getCurrentUser()
-            const cartProducts = await getCartProducts(currentUser.name);
             setUser(currentUser)
+
+            // Revisar si algun producto esta sin stock, eliminarlo del carrito
+            const generalProducts = await getProductsByCategory(currentCategory)
+            for (const product of generalProducts) {
+                if (product?.stock == 0){
+                    await deleteProductFromCart(product?.name, currentUser?.name)
+                }
+            }
+
+            const cartProducts = await getCartProducts(currentUser.name);
             setProducts(cartProducts);
         }
 

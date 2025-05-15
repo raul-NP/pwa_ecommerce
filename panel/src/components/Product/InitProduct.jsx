@@ -18,6 +18,7 @@ function InitProduct({product, userName, showModal, modalProcessing, setModalPro
 
     const [liked, setLiked] = useState(false)
     const [added, setAdded] = useState(false)
+    const [productClassName, setProductClassName] = useState(null)
     const likeSvg = liked ? likeStuffed : like;
     const addSvg = added ? check : cart;
 
@@ -36,8 +37,17 @@ function InitProduct({product, userName, showModal, modalProcessing, setModalPro
                 setLiked(false)
             }
         };
+
+        const checkStock = () => {
+            if (product?.stock == 0){
+                setProductClassName('product-none')
+            }else{
+                setProductClassName('product')
+            }
+        }
         
         checkLiked()
+        checkStock()
     }, []);
     
     // Función que añade un producto a la categoría de favoritos
@@ -101,7 +111,7 @@ function InitProduct({product, userName, showModal, modalProcessing, setModalPro
     return (
 
         // Card del producto
-        <div className='product'>
+        <div className={productClassName}>
 
             {/* Imágen del producto */}
             <div className='product-image'>
