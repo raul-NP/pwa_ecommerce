@@ -145,9 +145,9 @@ function Home ({categories}) {
                             {pair.map((product) => (
                                 <InitProduct 
                                     key={product?.id} 
-                                    showModal={showModal} 
                                     product={product}
                                     userName={user?.name} 
+                                    showModal={showModal} 
                                     modalProcessing={modalProcessing} 
                                     setModalProcessing={setModalProcessing} 
                                     refreshProducts={refreshProducts} 

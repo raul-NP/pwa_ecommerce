@@ -6,33 +6,63 @@ import trashSvg from '../../assets/imgs/trash.svg';
 
 // Funcionalidad
 import { useState } from 'react';
-import { addProductCart, substractProductCart } from '../../services/api_service';
+import { addProductCart, deleteProductFromCart, substractProductCart } from '../../services/api_service';
 
-function CartProduct({product, quantity, userName, refreshCart}) {
+function CartProduct({product, quantity, userName, refreshCart, showModal, modalProcessing, setModalProcessing}) {
 
     const [realQuantity, setRealQuantity] = useState(quantity)
 
     // Función que elimina del carrito el producto
     async function deleteProduct() {
+
+        // Proteccion de spam de clics
+        if (modalProcessing) return;
+        setModalProcessing(true);
+        showModal(` ${product?.name} has been deleted from cart succesfully`)  
+        setTimeout(() => setModalProcessing(false), 2000);
+
+        // Borramos el producto del carrito
         await deleteProductFromCart(product?.name, userName)
-        refreshCart?.()
+        refreshCart()
     }
 
     // Función que resta en 1 la cantidad del producto
     async function addQuantity() {
+
+        // En caso de no sobrepasar el stock del producto
         if (realQuantity + 1 <= product?.stock){
             await addProductCart(product?.name, userName, true)
             setRealQuantity(realQuantity + 1)
-            refreshCart?.()
+            refreshCart()
+
+        // En caso de intentar sobrepasar el stock del producoto mostramos el modal
+        }else{
+
+            // Proteccion de spam de clics
+            if (modalProcessing) return;
+            setModalProcessing(true);
+            showModal(` You have reached the maximum stock of ${product?.name}`, 'cross')  
+            setTimeout(() => setModalProcessing(false), 2000);
         }
     }
 
     // Función que suma en 1 la cantidad del producto
     async function substractQuantity() {
+
+        // En caso de sobrepasar el stock minimo del producto
         if (realQuantity - 1 > 0) {
             await substractProductCart(product?.name, userName)
             setRealQuantity(realQuantity - 1)
-            refreshCart?.()
+            refreshCart()
+        
+        // En caso de intentar sobrepasar el minimo de stock del producto mostramos el modal
+        }else{
+
+            // Proteccion de spam de clics
+            if (modalProcessing) return;
+            setModalProcessing(true);
+            showModal(` You have reached the minimum stock of ${product?.name}`, 'cross')  
+            setTimeout(() => setModalProcessing(false), 2000);
         }
     }
 
@@ -46,13 +76,13 @@ function CartProduct({product, quantity, userName, refreshCart}) {
 
                 {/* Imágen del producto */}
                 <div className='cart-product-img'>
-                    <img src="https://www.rabat.net/media/catalog/product/r/o/rolex-deepsea-m136660-0005.png" alt="" />
+                    <img src={product?.url_image} alt="" />
                 </div>
 
                 {/* Datos del producto */}
                 <div className='cart-product-data'>
-                    <h1 id='product-name'>Rolex Deepsea</h1>
-                    <h1 id='product-price'>$ 499.99</h1>
+                    <h1 id='product-name'>{product?.name}</h1>
+                    <h1 id='product-price'>{product?.price.toFixed(2)}</h1>
                 </div>
 
                 {/* Sumatorio o resta de productos en el carrito */}
@@ -71,8 +101,6 @@ function CartProduct({product, quantity, userName, refreshCart}) {
 
         </div>
     )
-
-
 }
 
 export default CartProduct

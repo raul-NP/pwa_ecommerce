@@ -6,6 +6,7 @@ import ProfileHeader from '../ProfileHeader/ProfileHeader';
 import Footer from '../Footer/Footer';
 import Button from '../Button/Button';
 import CartProduct from '../Product/CartProduct';
+import Modal from '../Modal/Modal';
 
 // Funcionalidad
 import { useEffect, useState } from 'react';
@@ -21,35 +22,49 @@ function Cart() {
     const [products, setProducts] = useState([])
     const [total, setTotal] = useState(0)
     const [totalQuantity, setTotalQuantity] = useState(0)
-
-    // Modales
-    
+    const [modalText, setModalText] = useState(null);
+    const [modalType, setModalType] = useState('');
+    const [modalProcessing, setModalProcessing] = useState(false);
  
-    // Cargar usuario  refresco de carrito
+    // Cargar usuario y productos del carrito
     useEffect(() => {
+
         const fetchData = async () => {
             const currentUser = await getCurrentUser()
+            const cartProducts = await getCartProducts(currentUser.name);
             setUser(currentUser)
-            refreshCart(currentUser)
+            setProducts(cartProducts);
         }
-        fetchData()
+
+        fetchData()  
+        refreshCart()
+
     }, [])
 
-    // Función que refresca el carrito (productos, totales ...)
-    const refreshCart = async (currentUser) => {
-        if (currentUser?.name) {
+    // Refresco de total, cantidad
+    useEffect(() => {
 
-            // Obtenemos los productos
-            const cartProducts = await getCartProducts(currentUser.name);
-            setProducts(cartProducts);
+        const calculatedTotal = products.reduce((sum, p) => sum + p.price * p.quantity, 0);
+        const calculatedQuantity = products.reduce((sum, p) => sum + p.quantity, 0);
+        setTotal(calculatedTotal.toFixed(2));
+        setTotalQuantity(calculatedQuantity);
 
-            // Calcular total y cantidad
-            const calculatedTotal = cartProducts.reduce((sum, p) => sum + p.price * p.quantity, 0);
-            const calculatedQuantity = cartProducts.reduce((sum, p) => sum + p.quantity, 0);
+    }, [products]);
 
-            setTotal(calculatedTotal.toFixed(2));
-            setTotalQuantity(calculatedQuantity);
-        }
+    // Refresco de productos
+    async function refreshCart() {
+        const refreshProducts = await getCartProducts(user?.name);
+        setProducts(refreshProducts);
+    }
+
+    // Función para mostrar los modales
+    const showModal = (text, type) => {
+        setModalText(text);
+        setModalType(type)
+        setTimeout(() => {
+            setModalText(null)
+            setModalType('')
+        }, 2000);
     };
 
     // Funcion de ir al pago de productos
@@ -67,6 +82,8 @@ function Cart() {
             {/* Contenedor de la página Carrito */}
             <div className='cart-container'>
 
+                {modalText && <Modal text={modalText} type={modalType}/>}
+
                 {/* Cuerpo del carrito */}
                 <div className='cart-body'>
                     
@@ -78,7 +95,16 @@ function Cart() {
                         {/* Cada uno de los productos */}
                         {products.length > 0 &&
                             products.map((product) => (
-                                <CartProduct key={product.id} product={product} quantity={product.quantity} userName={user?.name} refreshCart={refreshCart}/>
+                                <CartProduct 
+                                    key={product.id} 
+                                    product={product} 
+                                    quantity={product.quantity} 
+                                    userName={user?.name} 
+                                    refreshCart={refreshCart}
+                                    showModal={showModal} 
+                                    modalProcessing={modalProcessing} 
+                                    setModalProcessing={setModalProcessing}
+                                />
                             ))
                         }
 
