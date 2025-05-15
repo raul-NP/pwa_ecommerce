@@ -5,12 +5,21 @@ import './CartProduct.css'
 import trashSvg from '../../assets/imgs/trash.svg';
 
 // Funcionalidad
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { addProductCart, deleteProductFromCart, substractProductCart } from '../../services/api_service';
 
 function CartProduct({product, quantity, userName, refreshCart, showModal, modalProcessing, setModalProcessing}) {
 
     const [realQuantity, setRealQuantity] = useState(quantity)
+
+    useEffect(() => {
+
+        // En caso de que haya cambiado el stock porque otra persona ha comprado el producto
+        if (realQuantity > product?.stock){
+            setRealQuantity(product?.stock)
+        }
+        
+    }, [])
 
     // Función que elimina del carrito el producto
     async function deleteProduct() {

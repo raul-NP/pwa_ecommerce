@@ -11,9 +11,7 @@ import Modal from '../Modal/Modal';
 // Funcionalidad
 import { useEffect, useState } from 'react';
 import { deleteProductFromCart, getCartProducts, getCurrentUser, getProductsByCategory } from '../../services/api_service';
-
-// Imagenes
-
+import { useNavigate } from 'react-router-dom';
 
 // Página de login donde el usuario inicia sesión
 function Cart() {
@@ -25,6 +23,7 @@ function Cart() {
     const [modalText, setModalText] = useState(null);
     const [modalType, setModalType] = useState('');
     const [modalProcessing, setModalProcessing] = useState(false);
+    const navigate = useNavigate()
  
     // Cargar usuario y productos del carrito
     useEffect(() => {
@@ -34,7 +33,7 @@ function Cart() {
             setUser(currentUser)
 
             // Revisar si algun producto esta sin stock, eliminarlo del carrito
-            const generalProducts = await getProductsByCategory(currentCategory)
+            const generalProducts = await getProductsByCategory('All')
             for (const product of generalProducts) {
                 if (product?.stock == 0){
                     await deleteProductFromCart(product?.name, currentUser?.name)
@@ -81,7 +80,7 @@ function Cart() {
 
     // Funcion de ir al pago de productos
     function payment() {
-        
+        navigate('/cart/payment')
     }
 
     return (
