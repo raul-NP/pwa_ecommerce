@@ -102,7 +102,7 @@ function Payment() {
                 setSuccessModal(true);
                 setTimeout(() => {
                     setSuccessModal(false)
-                    navigate("")
+                    navigate("/profile/orders")
                 }, 2000);
 
             // En caso de fallo (Usuario compra justo antes un producto que ya no esta en stock)

@@ -1,10 +1,10 @@
-import Order from '../components/Order/Order'
+import Orders from '../components/Orders/Orders'
 
 // Página de login donde el usuario inicia sesión
 function OrderPage() {
 
     return (
-        <Order></Order>
+        <Orders></Orders>
     )
 }
 

@@ -3,9 +3,6 @@ import Footer from '../Footer/Footer'
 import PerfilIcon from '../PerfilIcon/PerfilIcon';
 import InitProduct from '../Product/InitProduct';
 
-// Imagenes
-
-
 // Fuentes y estilos
 import '../../styles/fonts.css'
 import '../../styles/colors.css'

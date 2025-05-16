@@ -1,0 +1,89 @@
+.order-card{
+    position: relative;
+    background-color: var(--secondary);
+    height: auto;
+    padding: 2vh;
+    border-radius: 2vh;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 4.01vh;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+}
+
+.order-header{
+    height: 10vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 2vh;
+}
+.order-tittle{
+    width: 70vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly
+}
+.order-tittle h1{
+    height: 6vh;
+    font-size: 4vh;
+    color: var(--tertiary);
+    font-weight: 400;
+}
+.order-tittle h2{
+    font-size: 1.5vh;
+    font-weight: 100;
+    color: var(--tertiary);
+}
+.order-ref{
+    text-align: center;
+    border-radius: 2vh;
+    padding: 1vh;
+    background-color: var(--tertiary);
+    width: 18vw;
+}
+
+.order-body{
+    display: flex;
+    flex-direction: column;
+}
+.order-body-products-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    color: var(--tertiary);
+    font-size: 3vh;
+}
+.order-body-products{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: 7vw;
+    padding-bottom: 1.5vh;
+    padding-top: 2vh;
+}
+
+.show-more-info{
+    position: absolute;
+    height: 4vh;
+    width: 4vh;
+    border-radius: 50%;
+    background-color: var(--secondary);
+    border: 0.3vh solid var(--quaternary);
+    left: 42.5vw;
+    bottom: -2vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes info-appear {
+    0%{
+        
+    }
+    100%{
+
+    }
+}
