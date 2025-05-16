@@ -45,7 +45,7 @@ function Profile() {
         <div>
 
             {/* Cabecera del perfil */}
-            <ProfileHeader user={user}></ProfileHeader>
+            <ProfileHeader text={"PROFILE"} user={user}></ProfileHeader>
 
             {/* Cuerpo del perfil */}
             <div className='perfil-body'>

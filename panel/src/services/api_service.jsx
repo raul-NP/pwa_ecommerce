@@ -309,3 +309,42 @@ export async function deleteProductFromCart(product_name, username) {
 
     return await response.json();
 }
+
+// ------------------- PEDIDOS --------------------
+
+// Función que crea un pedido
+export async function createOrder(address, date, total, username) {
+    const token = getToken();
+
+    const response = await fetch(`${API_URL}/orders/create`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ address, date, total, username })
+    });
+
+    const data = await response.json();
+
+    // Devuelve éxito y mensaje o error interno
+    return {
+        success: response.ok && data.success !== false, 
+        data
+    }
+}
+
+// Función para obtener los pedidos del usuario
+export async function getOrdersByUser(username) {
+    const token = getToken();
+
+    const response = await fetch(`${API_URL}/orders/${username}`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
+
+    if (!response.ok) return [];
+
+    return await response.json();
+}

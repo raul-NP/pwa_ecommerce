@@ -111,7 +111,7 @@ function ChangePassword() {
         <div>
             
             {/* Cabecera del perfil */}
-            <ProfileHeader user={user}></ProfileHeader>
+            <ProfileHeader text={"CHANGE PASSWORD"} user={user}></ProfileHeader>
 
             {/* Cuerpo de la página Cambio de contraseña */}
             <div className='change-password-body'>

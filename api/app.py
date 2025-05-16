@@ -4,6 +4,7 @@ from routes.users_route import users_bp
 from routes.categories_routes import categories_bp
 from routes.products_routes import products_bp
 from routes.carts_routes import carts_bp
+from routes.orders_routes import orders_bp
 from flask_jwt_extended import JWTManager
 from datetime import timedelta
 import os
@@ -31,6 +32,9 @@ app.register_blueprint(products_bp, url_prefix = "/products")
 
 # Blueprint de los carritos de usuario del ecommerce
 app.register_blueprint(carts_bp, url_prefix = "/carts")
+
+# Blueprint de los pedidos
+app.register_blueprint(orders_bp, url_prefix="/orders")
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

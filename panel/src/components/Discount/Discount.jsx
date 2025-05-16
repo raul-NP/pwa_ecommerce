@@ -94,7 +94,7 @@ function Discount() {
         <div>
             
             {/* Cabecera del perfil */}
-            <ProfileHeader user={user}></ProfileHeader>
+            <ProfileHeader text={"DISCOUNTS"} user={user}></ProfileHeader>
 
             {/* Cuerpo de la página descuentos */}
             <div className='discount-body'>

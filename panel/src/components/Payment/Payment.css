@@ -1,4 +1,98 @@
 .payment-container{
+    position: relative;
     height: 81vh;
     background-color: var(--quaternary);
+}
+
+.payment-body{
+    position: relative;
+    background-color: var(--secondary);
+    margin-left: 1.5vh;
+    margin-right: 1.5vh;
+    margin-bottom: 1.5vh;
+    border-radius: 2vh;
+    height: 45vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.payment-body > h1 {
+    position: relative;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size: 3vh;
+    align-self: self-start;
+    padding: 3.6vh;
+}
+
+.payment-products{
+    position: relative;
+    overflow-y: auto;
+    height: 17vh;
+    margin-bottom: 4vh;
+    width: 87%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding-bottom: 5vh;
+}
+
+.payment-total{
+    position: absolute;
+    border: 0.1vh solid var(--tertiary) ;
+    border-radius: 1.5vh;
+    padding: 1vh;
+    width: 70vw;
+    bottom: 3.5vh;
+    color: var(--tertiary);
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size: 3vh;
+    text-align: center;
+}
+
+.payment-address{
+    position: relative;
+    background-color: var(--secondary);
+    margin-left: 1.5vh;
+    margin-right: 1.5vh;
+    border-radius: 2vh;
+    height: 30.5vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.payment-address-row{
+    width: 80vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: -2vh;
+}
+
+.payment-address-input{
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size: 2vh;
+    width: 35vw;
+    background-color: var(--tert);
+    border: none;
+    border-bottom: 1px solid var(--tertiary);
+    padding: 0.5vh;
+    color: var(--tertiary);
+}
+.payment-address-input::placeholder{
+    color: var(--tertiary);
+}
+
+.payment-button{
+    position: absolute;
+    bottom: -2.25vh;
 }

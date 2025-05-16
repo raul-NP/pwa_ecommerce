@@ -5,16 +5,7 @@ import './ProfileHeader.css'
 import PerfilIcon from '../PerfilIcon/PerfilIcon';
 
 // Header de inicio y búsqueda de categorías
-function ProfileHeader({user}) {
-    
-    // Función para capitalizar el nombre de usuario
-    function capitalizeName(userName) {
-        if (userName){
-            return userName.trim().split(/\s+/).map(word => 
-                word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-            ).join(' ');
-        }
-    }
+function ProfileHeader({user, text}) {
 
     return (
 
@@ -28,8 +19,8 @@ function ProfileHeader({user}) {
                 <PerfilIcon userName={user?.name}></PerfilIcon>
 
                 {/* Mensaje de bienvenida */}
-                <div className='profile-header-tittle'>
-                    Welcome, {capitalizeName(user?.name)}
+                <div className='profile-header-text'>
+                    <h1 className='profile-header-tittle'>{text}</h1>
                 </div>
                 
             </div>

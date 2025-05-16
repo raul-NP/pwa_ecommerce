@@ -80,7 +80,18 @@ function Cart() {
 
     // Funcion de ir al pago de productos
     function payment() {
-        navigate('/cart/payment')
+
+        // Caso en el que hay productos en carrito
+        if (products.length > 0){
+            navigate('/cart/payment')
+        }
+
+        // Proteccion de spam de clics
+        if (modalProcessing) return 
+        setModalProcessing(true);
+        showModal("There are not products in cart", "cross")
+        setTimeout(() => setModalProcessing(false), 2000);
+
     }
 
     return (
@@ -88,7 +99,7 @@ function Cart() {
         <div>
             
             {/* Cabecera del perfil */}
-            <ProfileHeader user={user}></ProfileHeader>
+            <ProfileHeader text={"CART"} user={user}></ProfileHeader>
 
             {/* Contenedor de la página Carrito */}
             <div className='cart-container'>
