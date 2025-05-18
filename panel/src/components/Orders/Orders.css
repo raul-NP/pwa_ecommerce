@@ -6,3 +6,24 @@
     padding-top: 2vh;
     overflow-y: auto;
 }
+
+.order-none{
+    height: 79vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2vh;
+}
+
+.order-none img{
+    width: 7vh;
+}
+
+.order-none h1{
+    color: var(--primary);
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size: 5vh
+}

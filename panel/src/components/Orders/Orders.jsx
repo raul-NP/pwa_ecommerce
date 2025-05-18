@@ -10,6 +10,9 @@ import Order from '../Order/Order';
 import { useEffect, useState } from 'react';
 import { getCurrentUser, getOrdersByUser } from '../../services/api_service';
 
+// Imágenes
+import orderSvg from '../../assets/imgs/orderPrimary.svg';
+
 // Página de login donde el usuario inicia sesión
 function Orders() {
 
@@ -47,6 +50,15 @@ function Orders() {
                     orders.map((order, i) => (
                         <Order key={i} order={order} />
                     ))
+                }
+
+                {/* Cada uno de los pedidos */}
+                {orders.length == 0 &&
+                    <div className='order-none'>
+                        <img src={orderSvg} />
+                        <h1>There are no orders</h1>
+                        <h1>available yet</h1> 
+                    </div>
                 }
 
             </div>

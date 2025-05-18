@@ -27,7 +27,7 @@ function PayProduct({product, quantity}) {
 
                 {/* Imágen del producto */}
                 <div className='pay-product-img'>
-                    <img src={product?.url_image} alt="" />
+                    <img src={product?.url_image}/>
                 </div>
 
                 {/* Datos del producto */}

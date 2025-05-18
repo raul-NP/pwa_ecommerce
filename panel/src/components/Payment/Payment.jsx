@@ -168,13 +168,13 @@ function Payment() {
                     </div>
 
                     <div className='payment-address-row'>
-                        <input onChange={ (e) => {setFloorNumber(e.target.value)}} className='payment-address-input' type="text" name="addres-name" maxLength={10} placeholder='Floor Number' required/>
-                        <input onChange={ (e) => {setPostalCode(e.target.value)}} className='payment-address-input' type="number" name="addres-sreet" maxLength={10} placeholder='Postal Code' required/>
+                        <input onChange={ (e) => {setFloorNumber(e.target.value)}} className='payment-address-input' type="text" name="addres-floor-number" maxLength={10} placeholder='Floor Number' required/>
+                        <input onChange={ (e) => {setPostalCode(e.target.value)}} className='payment-address-input' type="number" name="addres-postal-code" maxLength={10} placeholder='Postal Code' required/>
                     </div>
 
                     <div className='payment-address-row'>
-                        <input onChange={ (e) => {setCity(e.target.value)}} className='payment-address-input' type="text" name="addres-name" maxLength={30} placeholder='City' required/>
-                        <input onChange={ (e) => {setCountry(e.target.value)}} className='payment-address-input' type="text" name="addres-sreet" maxLength={56} placeholder='Country' required/>
+                        <input onChange={ (e) => {setCity(e.target.value)}} className='payment-address-input' type="text" name="addres-city" maxLength={30} placeholder='City' required/>
+                        <input onChange={ (e) => {setCountry(e.target.value)}} className='payment-address-input' type="text" name="addres-country" maxLength={56} placeholder='Country' required/>
                     </div>
 
                     {/* Botón de pago */}

@@ -129,7 +129,7 @@ def get_orders_by_user(username):
 
             # Obtenemos los productos de cada pedido
             cursor.execute("""
-                SELECT p.name, p.price, op.quantity
+                SELECT p.name, p.price, p.url_image, op.quantity
                 FROM order_products op
                 JOIN products p ON op.id_product = p.id
                 WHERE op.id_order = %s
