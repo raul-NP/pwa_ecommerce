@@ -20,6 +20,7 @@ import PaymentPage from '../../pages/PaymentPage';
 // Protección de rutas
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
 import PublicRoute from '../PublicRoute/PublicRoute';
+import PrivateAdminRoute from '../PrivateAdminRoute/PrivateAdminRoute'
 
 function App() {
 
@@ -74,12 +75,6 @@ function App() {
           </PrivateRoute>
         } />
 
-        <Route path="/profile/admin" element={
-          <PrivateRoute>
-            <AdminPanelPage />
-          </PrivateRoute>
-        } />
-
         <Route path="/cart" element={
           <PrivateRoute>
             <CartPage />
@@ -90,6 +85,12 @@ function App() {
           <PrivateRoute>
             <PaymentPage />
           </PrivateRoute>
+        } />
+
+        <Route path="/profile/admin" element={
+          <PrivateAdminRoute>
+            <AdminPanelPage />
+          </PrivateAdminRoute>
         } />
 
         {/* Rutas protegidas según autenticación */}
