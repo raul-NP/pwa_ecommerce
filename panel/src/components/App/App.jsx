@@ -21,6 +21,9 @@ import PaymentPage from '../../pages/PaymentPage';
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
 import PublicRoute from '../PublicRoute/PublicRoute';
 import PrivateAdminRoute from '../PrivateAdminRoute/PrivateAdminRoute'
+import UserManagementPage from '../../pages/UserManagementPage';
+import CategoriesManagementPage from '../../pages/CategoriesManagementPage';
+import ProductsManagementPage from '../../pages/ProductsManagementPage';
 
 function App() {
 
@@ -90,6 +93,24 @@ function App() {
         <Route path="/profile/admin" element={
           <PrivateAdminRoute>
             <AdminPanelPage />
+          </PrivateAdminRoute>
+        } />
+
+        <Route path="/profile/admin/users" element={
+          <PrivateAdminRoute>
+            <UserManagementPage />
+          </PrivateAdminRoute>
+        } />
+
+        <Route path="/profile/admin/categories" element={
+          <PrivateAdminRoute>
+            <CategoriesManagementPage />
+          </PrivateAdminRoute>
+        } />
+
+        <Route path="/profile/admin/products" element={
+          <PrivateAdminRoute>
+            <ProductsManagementPage />
           </PrivateAdminRoute>
         } />
 

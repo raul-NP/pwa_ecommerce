@@ -8,10 +8,10 @@ import Footer from '../Footer/Footer';
 // Funcionalidad
 import { useEffect, useState } from 'react';
 import { getCurrentUser } from '../../services/api_service';
+import { useNavigate } from 'react-router-dom';
 
 // Imágenes
 import settingsSvg from '../../assets/imgs/settings.svg';
-import { useNavigate } from 'react-router-dom';
 
 // Página de login donde el usuario inicia sesión
 function AdminPanel() {
