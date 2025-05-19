@@ -2,7 +2,7 @@
 import './Order.css'
 
 // Funcionalidad
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 // Imágenes
 import downArrowSvg from '../../assets/imgs/downArrow.svg';

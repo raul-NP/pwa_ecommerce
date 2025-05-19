@@ -13,6 +13,9 @@ import { useEffect, useState } from 'react';
 import { deleteProductFromCart, getCartProducts, getCurrentUser, getProductsByCategory } from '../../services/api_service';
 import { useNavigate } from 'react-router-dom';
 
+// Imágen
+import productsSvg from '../../assets/imgs/products.svg';
+
 // Página de login donde el usuario inicia sesión
 function Cart() {
 
@@ -128,6 +131,15 @@ function Cart() {
                                     setModalProcessing={setModalProcessing}
                                 />
                             ))
+                        }
+
+                        {/* Caso en el que no haya productos en el carrito */}
+                        { products.length == 0 &&
+                            <div className='cart-none'>
+                                <img src={productsSvg} />
+                                <h1>There are no products</h1>
+                                <h1>in the cart</h1>
+                            </div>
                         }
 
                     </div>
