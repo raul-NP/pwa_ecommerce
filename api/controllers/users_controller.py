@@ -80,3 +80,19 @@ def update_user_by_name(name, fields: dict):
     db.commit()
     cursor.close()
     db.close()
+
+# Funcion para borrar un usuario por nombre
+def delete_user_by_name(name):
+
+    # Abrimos conexion
+    db = get_db_connection()
+    cursor = db.cursor()
+
+    # Ejecutamos consulta
+    query = "DELETE FROM users WHERE name = %s"
+    cursor.execute(query, (name,))
+
+    # Cerramos conexion
+    db.commit()
+    cursor.close()
+    db.close()

@@ -17,8 +17,8 @@ CREATE TABLE users (
 -- Crear tabla de carritos
 CREATE TABLE carts (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    id_user INT UNIQUE,
-    FOREIGN KEY (id_user) REFERENCES users(id)
+    id_user INT,
+    FOREIGN KEY (id_user) REFERENCES users(id) ON DELETE CASCADE
 );
 
 -- Crear tabla de categorías
@@ -27,7 +27,7 @@ CREATE TABLE categories (
     name VARCHAR(100) NOT NULL
 );
 
--- Crear tabla de productos (sin columna de categoría)
+-- Crear tabla de productos
 CREATE TABLE products (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
@@ -53,8 +53,8 @@ CREATE TABLE cart_products (
     id_product INT,
     id_cart INT,
     quantity INT DEFAULT 1,
-    FOREIGN KEY (id_product) REFERENCES products(id),
-    FOREIGN KEY (id_cart) REFERENCES carts(id)
+    FOREIGN KEY (id_product) REFERENCES products(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_cart) REFERENCES carts(id) ON DELETE CASCADE
 );
 
 -- Crear tabla de pedidos
@@ -66,7 +66,7 @@ CREATE TABLE orders (
     state VARCHAR(50),
     total FLOAT,
     id_user INT,
-    FOREIGN KEY (id_user) REFERENCES users(id)
+    FOREIGN KEY (id_user) REFERENCES users(id) ON DELETE CASCADE
 );
 
 -- Crear tabla intermedia: productos en el pedido
@@ -75,9 +75,11 @@ CREATE TABLE order_products (
     id_product INT,
     id_order INT,
     quantity INT,
-    FOREIGN KEY (id_product) REFERENCES products(id),
-    FOREIGN KEY (id_order) REFERENCES orders(id)
+    FOREIGN KEY (id_product) REFERENCES products(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_order) REFERENCES orders(id) ON DELETE CASCADE
 );
+
+-- DATOS DE INICIO PARA DEMO
 
 -- Insertar productos
 INSERT INTO products (name, price, stock, url_image, description) VALUES
@@ -98,25 +100,11 @@ INSERT INTO product_categories (id_product, id_category) VALUES
 (1, 1), -- Reloj deepsea -> Todos
 (1, 2), -- Reloj deepsea -> Relojes
 (1, 6), -- Reloj deepsea -> Favoritos
-(2, 1), -- Collar Perlas -> Todos
-(2, 5); -- Collar Perlas -> Pulseras
+(2, 1), -- Pulsera plata -> Todos
+(2, 5); -- Pulsera plata -> Pulseras
 
--- Insertar usuario administrador
+-- Insertar usuario administrador y su carrito
 INSERT INTO users (name, password, rol, points) VALUES
 ('admin', 'scrypt:32768:8:1$mvgrN7FRdTKWPy63$04f52bb54ba8aa88f225eac9e702de8f8651365073e5c2be6101eab833907798ba5ebb6aaf0d8e57b6ae9353a70b8f87a848ee3a6d175d7ea40ab462c0b51acd', 'admin', 250);
 
--- Insertar carrito para el admin
 INSERT INTO carts (id_user) VALUES (1);
-
--- Insertar productos en el carrito (ejemplo comentado)
--- INSERT INTO cart_products (id_product, id_cart, quantity) VALUES
--- (1, 1, 1),
--- (2, 1, 2);
-
--- Insertar pedido del admin (ejemplo comentado)
--- INSERT INTO orders (date, n_ref, address, state, total, id_user) VALUES
--- (CURDATE(), 'ORD-0001', 'Calle Falsa 123, Logroño', 'pagado', 1690.00, 1);
-
--- Insertar productos en el pedido (ejemplo comentado)
--- INSERT INTO order_products (id_product, id_order, quantity) VALUES
--- (1, 1, 1),

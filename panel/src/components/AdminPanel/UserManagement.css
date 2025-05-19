@@ -8,7 +8,7 @@
 
 .admin-users{
     overflow-y: auto;
-    height: 53vh;
+    height: 40vh;
     margin-bottom: 1.5vh;
 }
 
@@ -20,6 +20,7 @@
     height: 7vh;
     align-items: center;
     padding-left: 5vw;
+    margin-bottom: 1.5vh;
     gap: 5vw;
     font-family: 'Cormorant Garamond', serif;
     font-weight: 300;
@@ -37,7 +38,7 @@
     position: relative;
     background-color: var(--secondary);
     border-radius: 2vh;
-    height: 20vh;
+    height: 33vh;
     display: flex;
     flex-direction: column;
     gap: 2.5vh;
@@ -65,6 +66,7 @@
     font-weight: 300;
     font-style: italic;
     color: var(--tertiary);
+    opacity: 50%;
 }
 
 .div-input-controller{

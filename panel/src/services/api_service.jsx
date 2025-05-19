@@ -8,29 +8,17 @@ export function getToken() {
 // -------------------------------  USUARIOS -------------------------------
 
 // Función para recoger los usuarios de la aplicación
-// export async function getUsers() {
+export async function getUsers() {
 
-//     const token = getToken()
+    const token = getToken()
 
-//     const response = await fetch(`${API_URL}/users/`, {
-//         headers: {
-//             'Authorization': `Bearer ${token}`
-//         }
-//     })
-//     return response.json();
-// }
-
-// Función que recoge un usuario por nombre
-// export async function getUser(name) {
-
-//     const response = await fetch(`${API_URL}/users/${name}`);
-    
-//     if (response.status != 200){
-//         return false
-//     }
-
-//     return await response.json()
-// }
+    const response = await fetch(`${API_URL}/users/`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+    return response.json();
+}
 
 // Función para recuperar el usuario loggeado
 export async function getCurrentUser() {
@@ -85,6 +73,24 @@ export async function updateUser(user) {
 
     // En caso de error
     if (response.status !== 200) {
+        return false;
+    }
+
+    return await response.json();
+}
+
+// Función que elimina un usuario por nombre
+export async function deleteUser(name) {
+    const token = getToken();
+
+    const response = await fetch(`${API_URL}/users/${name}`, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
+
+    if (!response.ok) {
         return false;
     }
 

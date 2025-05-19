@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from controllers.users_controller import show_all, insert_user, find_user_by_name, update_user_by_name
+from controllers.users_controller import show_all, insert_user, find_user_by_name, update_user_by_name, delete_user_by_name
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 import re
@@ -7,22 +7,10 @@ import re
 users_bp = Blueprint('users', __name__)
 
 # Listar todas las personas
-# @user_bp.route("/", methods=['GET'])
-# @jwt_required()
-# def get_users():
-#     return show_all()
-
-# Listar una persona por nombre
-# @user_bp.route("/<string:name>", methods=['GET'])
-# def get_user(name):
-
-#     # Buscamos el usuario
-#     user = find_user_by_name(name)
-
-#     if not user:
-#         return jsonify({"error": "Usuario no encontrado"}), 404
-
-#     return jsonify(user), 200
+@users_bp.route("/", methods=['GET'])
+@jwt_required()
+def get_users():
+    return show_all()
 
 # Recuperar usuario actual loggeado
 @users_bp.route("/me", methods=["GET"])
@@ -67,34 +55,57 @@ def post():
 @users_bp.route("/", methods=["PUT"])
 def update_user():
     try:
-        # Recogemos el usuario nuevo a editar
-        new_user = request.get_json()
+        data = request.get_json()
 
-        # Caso en el que no se introduce el nombre en el body
-        name = new_user.get("name")
+        # El nombre original es obligatorio para identificar al usuario
+        name = data.get("name")
         if not name:
-            return jsonify({"error": "El campo 'name' es obligatorio"}), 400
+            return jsonify({"error": "El campo 'name' (nombre original) es obligatorio"}), 400
 
-        # Caso en el que no se encuentra el usuario
+        # Verificamos que el usuario exista
         user = find_user_by_name(name)
         if not user:
             return jsonify({"error": "Usuario no encontrado"}), 404
 
-        # Si viene nueva contraseña, se hashea
-        if "password" in new_user:
-            new_user["password"] = generate_password_hash(new_user["password"])
+        # Preparamos los campos a actualizar
+        update_fields = {}
 
-        # Evita que se edite el id
-        new_user.pop("id", None) 
+        if "new_name" in data and data["new_name"]:
+            update_fields["name"] = data["new_name"]
 
-        # Actualizamos el usuario
-        update_user_by_name(name, new_user)
+        if "password" in data and data["password"]:
+            update_fields["password"] = generate_password_hash(data["password"])
+
+        if "points" in data:
+            update_fields["points"] = data["points"]
+
+        if "rol" in data:
+            update_fields["rol"] = data["rol"]
+
+        if not update_fields:
+            return jsonify({"error": "No se proporcionaron campos para actualizar"}), 400
+
+        # Actualiza el usuario por su nombre original
+        update_user_by_name(name, update_fields)
 
         return jsonify({"message": "Usuario actualizado correctamente"}), 200
 
     except Exception as e:
         return jsonify({"error": f"Error al actualizar: {str(e)}"}), 500
 
+# Eliminar un usuario
+@users_bp.route("/<string:name>", methods=["DELETE"])
+@jwt_required()
+def delete_user(name):
+
+    # Verificar si existe el usuario
+    user = find_user_by_name(name)
+    if not user:
+        return jsonify({"error": "Usuario no encontrado"}), 404
+
+    # Ejecutar borrado
+    delete_user_by_name(name)
+    return jsonify({"message": "Usuario eliminado correctamente"}), 200
 
 # Login del usuario 
 @users_bp.route("/login", methods = ['POST'])
