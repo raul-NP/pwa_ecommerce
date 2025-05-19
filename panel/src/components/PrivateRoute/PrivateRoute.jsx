@@ -12,12 +12,19 @@ function PrivateRoute({ children }) {
 
     const validateToken = async () => {
 
-      // Caso en el que existe el usuario
-      if (await getCurrentUser()) {
+      try {
+        // Caso en el que existe el usuario
+        const user = await getCurrentUser()
         setIsAuth(true);
 
-      // Caso en el que ha expirado el token
-      } else {
+        // Caso en el que ha expirado el token
+        if (!user){
+          localStorage.removeItem("token")
+          setIsAuth(false);
+        }
+
+      // Caso de error
+      } catch (e) {
         localStorage.removeItem("token")
         setIsAuth(false);
       }

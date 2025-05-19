@@ -12,20 +12,26 @@ function PrivateAdminRoute({ children }) {
 
     const validateToken = async () => {
 
-    const user = await getCurrentUser()
+      try {
+        // Caso en el que existe el usuario
+        const user = await getCurrentUser()
 
-      // Caso en el que existe el usuario
-      if (user) {
+        // Caso en el que ha expirado el token
+        if (!user){
+          localStorage.removeItem("token")
+          setIsAuth(false);
 
-        // Comprobación de si es admin para poder acceder a la ruta
-        if (user?.rol === "admin"){
-            setIsAuth(true);
+        // Caso en el que el usuario es admin
+        }else if(user?.rol === "admin"){
+          setIsAuth(true);
+
+        // Caso en el que el usuario existe pero no es administrador
         }else{
-            setIsAuth(false)
+          setIsAuth(false);
         }
 
-      // Caso en el que ha expirado el token
-      } else {
+      // Caso de error
+      } catch (e) {
         localStorage.removeItem("token")
         setIsAuth(false);
       }
@@ -35,8 +41,7 @@ function PrivateAdminRoute({ children }) {
 
   }, [window.location.pathname]) // Dependencia de cambio de ruta
 
-  // Si el usuario esta autenticado y es admin navegara a la ruta especificada, 
-  // sino se redirigira al Login en caso de expiración de token o al Home si todavía tiene token
+  // Si el usuario esta autenticado navegara a la ruta especificada, sino se redirigira al Login
   return isAuth ? children : <Navigate to="/" replace />;
 }
 

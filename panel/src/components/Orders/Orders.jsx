@@ -28,9 +28,6 @@ function Orders() {
             const orders = await getOrdersByUser(currentUser.name);
             setUser(currentUser)
             setOrders(orders);
-            console.log(orders);
-            
-            
         }
 
         fetchData()  
