@@ -251,8 +251,10 @@ function UserManagement() {
                         <div className="admin-user" key={u.id}>
                             <img src={userSvg} alt="user" />
                             <h1>{u.name}</h1>
-                            <img src={editSvg} onClick={() => editUser(u)} />
-                            <img src={trashSvg} onClick={() => {setSelectedUserToDelete(u); setShowDeleteConfirmModal(true);}} />
+                            <div className='admin-user-actions'>
+                                <img src={editSvg} onClick={() => editUser(u)} />
+                                <img src={trashSvg} onClick={() => {setSelectedUserToDelete(u); setShowDeleteConfirmModal(true);}} />
+                            </div>
                         </div>
                     ))}
 
@@ -272,7 +274,11 @@ function UserManagement() {
                         <input className='input-controller' value={editPoints} onChange={(e) => setEditPoints(e.target.value)} type="number" placeholder='Points' required/>
                     </div>
                     <div className='div-input-controller'>
-                        <input className='input-controller' value={editRol} onChange={(e) => setEditRol(e.target.value)} type="text" placeholder='Rol' required/>
+                        <select className='input-controller' value={editRol} onChange={(e) => setEditRol(e.target.value)} required>
+                            <option value="" disabled>Role</option>
+                            <option value="admin">Admin</option>
+                            <option value="user">User</option>
+                        </select>
                     </div>
 
                     {/* Botón de la acción de crear o editar un usuario */}

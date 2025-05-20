@@ -13,6 +13,7 @@
 }
 
 .admin-user{
+    position: relative;
     display: flex;
     flex-direction: row;
     background-color: var(--secondary);
@@ -32,6 +33,12 @@
 }
 .admin-user img{
     width: 3vh;
+}
+.admin-user-actions {
+    margin-left: auto;
+    display: flex;
+    gap: 2vh;
+    padding-right: 2vh;
 }
 
 .admin-users-controller{

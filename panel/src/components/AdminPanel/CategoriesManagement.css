@@ -1,0 +1,106 @@
+.admin-category-container{
+    background-color: var(--quaternary);
+    height: 79.5vh;
+    padding-left: 1.5vh;
+    padding-right: 1.5vh;
+    padding-bottom: 1.5vh;
+}
+
+.admin-categories{
+    overflow-y: auto;
+    height: 61vh;
+    margin-bottom: 1.5vh;
+}
+
+.admin-category{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    background-color: var(--secondary);
+    border-radius: 2vh;
+    height: 7vh;
+    align-items: center;
+    padding-left: 5vw;
+    margin-bottom: 1.5vh;
+    gap: 5vw;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-style: italic;
+}
+.admin-category h1{
+    width: 48vw;
+    font-size: 2.5vh;
+}
+.admin-category img{
+    width: 3vh;
+}
+.admin-category-actions {
+    margin-left: auto;
+    display: flex;
+    gap: 2vh;
+    padding-right: 2vh;
+}
+
+.admin-categories-controller{
+    position: relative;
+    background-color: var(--secondary);
+    border-radius: 2vh;
+    height: 12vh;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5vh;
+    padding-left: 4vh;
+    padding-right: 5vh;
+    padding-top: 2vh;
+}
+
+.input-controller{
+    width: 100%;
+    padding-bottom: 1vh;
+    padding-top: 1vh;
+    padding-left: 1vh;
+    background-color: var(--secondary);
+    border: none;
+    font-size: 2vh;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--tertiary);
+    outline: none;
+}
+.input-controller::placeholder{
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--tertiary);
+    opacity: 50%;
+}
+
+.div-input-controller{
+    display: flex;
+    flex-direction: row;
+    border-bottom: 0.3vh solid var(--tertiary);
+}
+
+.management-button{
+    position: absolute;
+    left: 29vw;
+    bottom: -2vh;
+}
+
+.create-button{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 4.5vh;
+    width: 4.5vh;
+    border-radius: 50%;
+    bottom: 2vh;
+    font-size: 4vh;
+    color: var(--tertiary);
+    border: 0.3vh solid var(--tertiary);
+    background-color: var(--secondary);
+    bottom: -2vh;
+    right: 19vw;
+}

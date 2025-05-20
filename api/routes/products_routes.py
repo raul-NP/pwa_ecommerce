@@ -1,19 +1,20 @@
 from flask import Blueprint, jsonify, request
-from controllers.products_controller import get_by_category, assign_product_to_category, remove_product_from_category
+from controllers.products_controller import get_all, get_by_category, assign_product_to_category, remove_product_from_category, create_product, update_product, delete_product
 # from controllers.products_controller import get_all
 from flask_jwt_extended import jwt_required
 
 products_bp = Blueprint('products', __name__)
 
 # Recuperar todos los productos
-# @products_bp.route("/", methods=["GET"])
-# @jwt_required()  
-# def get_products():
+@products_bp.route("", methods=["GET"])
+@products_bp.route("/", methods=["GET"])
+@jwt_required()  
+def get_products():
 
-#     # Conseguir todas las categorias
-#     products = get_all()
+    # Conseguir todas las categorias
+    products = get_all()
 
-#     return jsonify(products), 200
+    return jsonify(products), 200
 
 # Recuperar los productos de una categoria en concreto
 @products_bp.route("/<string:category_name>", methods=["GET"])
@@ -72,4 +73,27 @@ def unassign_product(category_name):
         return jsonify({"message": "id_product are required"}), 400
 
     result, status = remove_product_from_category(id_product, category_name)
+    return jsonify(result), status
+
+# Crear producto
+@products_bp.route("/", methods=["POST"])
+@jwt_required()
+def create():
+    data = request.get_json()
+    result, status = create_product(data)
+    return jsonify(result), status
+
+# Actualizar producto
+@products_bp.route("/<int:id_product>", methods=["PUT"])
+@jwt_required()
+def update(id_product):
+    data = request.get_json()
+    result, status = update_product(id_product, data)
+    return jsonify(result), status
+
+# Eliminar producto
+@products_bp.route("/<int:id_product>", methods=["DELETE"])
+@jwt_required()
+def delete(id_product):
+    result, status = delete_product(id_product)
     return jsonify(result), status

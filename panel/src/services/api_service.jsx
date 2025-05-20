@@ -151,19 +151,77 @@ export async function getCategories() {
     return response.json();
 }
 
+// Crea una nueva categoría
+export async function createCategory(category) {
+    const token = getToken();
+
+    const response = await fetch(`${API_URL}/categories/`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(category)
+    });
+
+    if (response.status !== 200) {
+        return false;
+    }
+
+    return await response.json();
+}
+
+// Actualiza una categoría existente
+export async function updateCategory(category) {
+    const token = getToken();
+
+    const response = await fetch(`${API_URL}/categories/`, {
+        method: 'PUT',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(category)
+    });
+
+    if (response.status !== 200) {
+        return false;
+    }
+
+    return await response.json();
+}
+
+// Elimina una categoría por nombre
+export async function deleteCategory(name) {
+    const token = getToken();
+
+    const response = await fetch(`${API_URL}/categories/${name}`, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
+
+    if (!response.ok) {
+        return false;
+    }
+
+    return await response.json();
+}
+
 // ------------------- PRODUCTOS --------------------
 
 // Recupera todos los productos
-// export async function getAllProducts() {
-//     const token = getToken();
-//     const response = await fetch(`${API_URL}/products/`, {
-//         headers: {
-//             'Authorization': `Bearer ${token}`
-//         }
-//     });
+export async function getAllProducts() {
+    const token = getToken();
+    const response = await fetch(`${API_URL}/products/`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
 
-//     return response.json();
-// }
+    return response.json();
+}
 
 // Recupera productos por nombre de categoría
 export async function getProductsByCategory(categoryName) {
@@ -227,6 +285,64 @@ export async function removeProductFromCategory(id_product, category_name) {
     // Caso en el que el producto no esta en la categoria 
     if (response.status == 409){
         return false
+    }
+
+    return await response.json();
+}
+
+// Crea un nuevo producto 
+export async function createProduct(product) {
+    const token = getToken();
+
+    const response = await fetch(`${API_URL}/products/`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(product)
+    });
+
+    if (!response.ok) {
+        return false;
+    }
+
+    return await response.json();
+}
+
+// Actualiza un producto
+export async function updateProduct(id, product) {
+    const token = getToken();
+
+    const response = await fetch(`${API_URL}/products/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(product)
+    });
+
+    if (!response.ok) {
+        return false;
+    }
+
+    return await response.json();
+}
+
+// Elimina un producto completamente
+export async function deleteProduct(id) {
+    const token = getToken();
+
+    const response = await fetch(`${API_URL}/products/${id}`, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
+
+    if (!response.ok) {
+        return false;
     }
 
     return await response.json();
