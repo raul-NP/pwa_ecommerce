@@ -24,11 +24,13 @@ import PrivateAdminRoute from '../PrivateAdminRoute/PrivateAdminRoute'
 import UserManagementPage from '../../pages/UserManagementPage';
 import CategoriesManagementPage from '../../pages/CategoriesManagementPage';
 import ProductsManagementPage from '../../pages/ProductsManagementPage';
+import ConnectionBanner from '../ConnectionBanner/ConnectionBanner';
 
 function App() {
 
   return (
     <Router>
+      <ConnectionBanner />
       <Routes>
         <Route path="/" element={
           <PublicRoute>

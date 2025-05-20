@@ -1,7 +1,7 @@
 {
-    "name": "Mi Tienda Online",
-    "short_name": "Tienda PWA",
-    "description": "Una tienda online como aplicación",
+    "name": "DE LYSÉANT",
+    "short_name": "Tienda PWA Ecommerce",
+    "description": "Un ecommerce acerca de una joyería",
     "start_url": "/",
     "display": "standalone",  
     "background_color": "#ffffff",
