@@ -1,0 +1,59 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.modal-content {
+    background: var(--primary);
+    padding: 4vh;
+    border-radius: 2vh;
+    border: solid 0.2vh var(--tertiary);
+    text-align: center;
+    width: 60vw;
+    display: flex;
+    flex-direction: column;
+    gap: 3vh;
+}
+.modal-content h2{
+    color: var(--tertiary);
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-style: italic;
+}
+
+.modal-buttons {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-around;
+}
+
+.modal-buttons button {
+    padding: 0.5rem 1rem;
+    border: none;
+    padding: 1vh 2vh;
+    border-radius: 2vh;
+    color: var(--tertiary);
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size: 2vh;
+}
+
+.modal-buttons button:first-child {
+    background-color: var(--primary);
+    color: var(--tertiary);
+    border: 0.2vh solid var(--tertiary);
+}
+
+.modal-buttons button:last-child {
+    background-color: var(--tertiary);
+    color: var(--primary);
+}

@@ -16,11 +16,13 @@ import discountSvg from '../../assets/imgs/discount.svg';
 import lockSvg from '../../assets/imgs/password_2.svg';
 import logoutSvg from '../../assets/imgs/logout.svg';
 import adminSvg from '../../assets/imgs/admin.svg';
+import ModalConfirm from '../Modal/ModalConfirm';
 
 // Componente perfil
 function Profile() {
 
     const [user, setUser] = useState(null)
+    const [showConfirmModal, setShowConfirmModal] = useState(false);
     const navigate = useNavigate()
  
     // Datos del usuario
@@ -43,6 +45,9 @@ function Profile() {
     return (
 
         <div>
+
+            {/* Modal de confirmacion para el logout */}
+            <ModalConfirm showModal={showConfirmModal} setShowModal={setShowConfirmModal} onConfirm={logout} message="Are you sure you want to logout?"></ModalConfirm>
 
             {/* Cabecera del perfil */}
             <ProfileHeader text={"PROFILE"} user={user}></ProfileHeader>
@@ -69,7 +74,7 @@ function Profile() {
                             <h1>Change password</h1>
                             <img src={lockSvg}/>
                         </div>
-                        <div className='perfil-option' onClick={logout}>
+                        <div className='perfil-option' onClick={() => setShowConfirmModal(true)}>
                             <h1>Logout</h1>
                             <img src={logoutSvg}/>
                         </div>

@@ -6,6 +6,7 @@ import ProfileHeader from '../ProfileHeader/ProfileHeader';
 import Footer from '../Footer/Footer';
 import Button from '../Button/Button';
 import Modal from '../Modal/Modal';
+import ModalConfirm from '../Modal/ModalConfirm';
 
 // Funcionalidad
 import { useEffect, useState } from 'react';
@@ -39,6 +40,8 @@ function UserManagement() {
     const [errorEditModal, setErrorEditModal] = useState(null)
     const [errorCreateModal, setErrorCreateModal] = useState(null)
     const [errorDeleteModal, setErrorDeleteModal] = useState(null)
+    const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState(false);
+    const [selectedUserToDelete, setSelectedUserToDelete] = useState(null);
 
     // Datos del usuario
     useEffect(() => {
@@ -158,10 +161,10 @@ function UserManagement() {
     }
 
     // Función que realiza la accion de borrar un usuario
-    async function removeUser(user) {
+    async function removeUser() {
         
         // En caso de borrar exitosamente
-        if (await deleteUser(user?.name)){
+        if (await deleteUser(selectedUserToDelete?.name)){
 
             // Modal de aviso
             setSuccessDeleteModal(true)
@@ -186,6 +189,9 @@ function UserManagement() {
             }, 2000)
 
         }
+
+        // Limpiamos el usuario a eliminar
+        setSelectedUserToDelete(null);
     }
 
     // Función que establece los valores a crear de un usuario
@@ -217,6 +223,14 @@ function UserManagement() {
     return (
         <div>
 
+            {/* Modal de confirmacion para eliminar un usuario */}
+            <ModalConfirm
+                showModal={showDeleteConfirmModal}
+                setShowModal={setShowDeleteConfirmModal}
+                onConfirm={removeUser}
+                message={`Are you sure you want to delete user "${selectedUserToDelete?.name}"?`}
+            />
+
             {/* Header de la aplicación */}
             <ProfileHeader user={currentUser} text={"USER MANAGEMENT"}></ProfileHeader>
 
@@ -238,7 +252,7 @@ function UserManagement() {
                             <img src={userSvg} alt="user" />
                             <h1>{u.name}</h1>
                             <img src={editSvg} onClick={() => editUser(u)} />
-                            <img src={trashSvg} onClick={() => removeUser(u)} />
+                            <img src={trashSvg} onClick={() => {setSelectedUserToDelete(u); setShowDeleteConfirmModal(true);}} />
                         </div>
                     ))}
 

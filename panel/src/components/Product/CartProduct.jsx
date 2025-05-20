@@ -8,9 +8,13 @@ import trashSvg from '../../assets/imgs/trash.svg';
 import { useEffect, useState } from 'react';
 import { addProductCart, deleteProductFromCart, substractProductCart } from '../../services/api_service';
 
+// Componentes
+import ModalConfirm from '../Modal/ModalConfirm';
+
 function CartProduct({product, quantity, userName, refreshCart, showModal, modalProcessing, setModalProcessing}) {
 
     const [realQuantity, setRealQuantity] = useState(quantity)
+    const [showConfirmModal, setShowConfirmModal] = useState(false);
 
     useEffect(() => {
 
@@ -85,6 +89,14 @@ function CartProduct({product, quantity, userName, refreshCart, showModal, modal
         // Contenedor del producto
         <div className='cart-product-container'>
 
+            {/* Modal de confirmacion de eliminacion de un producto del carrito */}
+            <ModalConfirm
+                showModal={showConfirmModal}
+                setShowModal={setShowConfirmModal}
+                onConfirm={deleteProduct}
+                message={`Are you sure you want to remove "${product?.name}" from the cart?`}
+            />
+
             {/* Card del producto */}
             <div className='cart-product-card'>
 
@@ -110,10 +122,12 @@ function CartProduct({product, quantity, userName, refreshCart, showModal, modal
 
             {/* Botón de eliminar producto */}
             <div className='cart-product-trash'>
-                <img onClick={deleteProduct} id='trash' src={trashSvg} />
+                <img onClick={() => setShowConfirmModal(true)} id='trash' src={trashSvg} />
             </div>
 
         </div>
+
+        
     )
 }
 
