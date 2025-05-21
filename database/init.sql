@@ -1,10 +1,8 @@
--- Creamos la base de datos
+-- Crear base de datos
 CREATE DATABASE IF NOT EXISTS pwa_ecommerce;
-
--- Nos posicionamos en ella
 USE pwa_ecommerce;
 
--- Crear tabla de usuarios
+-- Tabla de usuarios
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
@@ -14,20 +12,20 @@ CREATE TABLE users (
     discount BOOLEAN DEFAULT FALSE
 );
 
--- Crear tabla de carritos
+-- Tabla de carritos
 CREATE TABLE carts (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    id_user INT,
+    id_user INT UNIQUE,
     FOREIGN KEY (id_user) REFERENCES users(id) ON DELETE CASCADE
 );
 
--- Crear tabla de categorías
+-- Tabla de categorías
 CREATE TABLE categories (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL
 );
 
--- Crear tabla de productos
+-- Tabla de productos
 CREATE TABLE products (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
@@ -37,27 +35,26 @@ CREATE TABLE products (
     description VARCHAR(250)
 );
 
--- Crear tabla intermedia: productos-categorías
+-- Tabla intermedia productos-categorías (PK compuesta)
 CREATE TABLE product_categories (
-    id INT AUTO_INCREMENT PRIMARY KEY,
     id_product INT NOT NULL,
     id_category INT NOT NULL,
+    PRIMARY KEY (id_product, id_category),
     FOREIGN KEY (id_product) REFERENCES products(id) ON DELETE CASCADE,
-    FOREIGN KEY (id_category) REFERENCES categories(id) ON DELETE CASCADE,
-    UNIQUE (id_product, id_category)
+    FOREIGN KEY (id_category) REFERENCES categories(id) ON DELETE CASCADE
 );
 
--- Crear tabla intermedia: productos en el carrito
+-- Tabla intermedia productos en el carrito (PK compuesta)
 CREATE TABLE cart_products (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    id_product INT,
-    id_cart INT,
+    id_product INT NOT NULL,
+    id_cart INT NOT NULL,
     quantity INT DEFAULT 1,
+    PRIMARY KEY (id_product, id_cart),
     FOREIGN KEY (id_product) REFERENCES products(id) ON DELETE CASCADE,
     FOREIGN KEY (id_cart) REFERENCES carts(id) ON DELETE CASCADE
 );
 
--- Crear tabla de pedidos
+-- Tabla de pedidos
 CREATE TABLE orders (
     id INT AUTO_INCREMENT PRIMARY KEY,
     date DATE NOT NULL,
@@ -69,17 +66,19 @@ CREATE TABLE orders (
     FOREIGN KEY (id_user) REFERENCES users(id) ON DELETE CASCADE
 );
 
--- Crear tabla intermedia: productos en el pedido
+-- Tabla intermedia productos en el pedido (PK compuesta)
 CREATE TABLE order_products (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    id_product INT,
-    id_order INT,
+    id_product INT NOT NULL,
+    id_order INT NOT NULL,
     quantity INT,
+    PRIMARY KEY (id_product, id_order),
     FOREIGN KEY (id_product) REFERENCES products(id) ON DELETE CASCADE,
     FOREIGN KEY (id_order) REFERENCES orders(id) ON DELETE CASCADE
 );
 
+-- -------------------------------
 -- DATOS DE INICIO PARA DEMO
+-- -------------------------------
 
 -- Insertar productos
 INSERT INTO products (name, price, stock, url_image, description) VALUES
@@ -97,11 +96,11 @@ INSERT INTO categories (name) VALUES
 
 -- Relacionar productos con categorías
 INSERT INTO product_categories (id_product, id_category) VALUES
-(1, 1), -- Reloj deepsea -> Todos
-(1, 2), -- Reloj deepsea -> Relojes
-(1, 6), -- Reloj deepsea -> Favoritos
-(2, 1), -- Pulsera plata -> Todos
-(2, 5); -- Pulsera plata -> Pulseras
+(1, 1), -- Deepsea -> All
+(1, 2), -- Deepsea -> Watches
+(1, 6), -- Deepsea -> Favourites
+(2, 1), -- Bracelet -> All
+(2, 5); -- Bracelet -> Bracelets
 
 -- Insertar usuario administrador y su carrito
 INSERT INTO users (name, password, rol, points) VALUES

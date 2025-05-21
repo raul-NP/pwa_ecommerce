@@ -81,6 +81,9 @@ def update_user():
 
         if "rol" in data:
             update_fields["rol"] = data["rol"]
+        
+        if "discount" in data:
+            update_fields["discount"] = data["discount"]
 
         if not update_fields:
             return jsonify({"error": "No se proporcionaron campos para actualizar"}), 400

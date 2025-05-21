@@ -190,8 +190,8 @@ function Login ({signIn}) {
                 </div>
 
                 {/* Enlaces para navegar entre páginas del login */}
-                {signIn && <a href="/signUp">Sign up</a>}
-                {!signIn && <a href="/">Sign in</a>}
+                {signIn && <a onClick={() => navigate("/signUp")}>Sign up</a>}
+                {!signIn && <a onClick={() => navigate("/")}>Sign in</a>}
                 
 
                 {/* Botón acceso o signUp*/}
