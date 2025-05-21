@@ -11,11 +11,13 @@ import ModalConfirm from '../Modal/ModalConfirm';
 // Funcionalidad
 import { useEffect, useState } from 'react';
 import { getCurrentUser, getAllProducts, createProduct, updateProduct, deleteProduct, getCategories } from '../../services/api_service';
+import { useNavigate } from 'react-router-dom';
 
 // Imágenes
 import editSvg from '../../assets/imgs/edit.svg';
 import trashSvg from '../../assets/imgs/trash.svg';
 import productSvg from '../../assets/imgs/product.svg';
+import setingsSvg from '../../assets/imgs/settings.svg';
 
 function ProductsManagement() {
 
@@ -24,6 +26,7 @@ function ProductsManagement() {
     const [categories, setCategories] = useState([]);
     const [editMode, setEditMode] = useState(false);
     const [originalProductId, setOriginalProductId] = useState(null);
+    const navigate = useNavigate()
 
     // Campos del formulario
     const [form, setForm] = useState({ name: '', price: '', stock: '', url_image: '', description: '', categories: []});
@@ -302,6 +305,11 @@ function ProductsManagement() {
                     {editMode &&
                         <button onClick={createNewProduct} className='create-button'>+</button>
                     }
+
+                    {/* Botón para volver al panel de administrador */}
+                    <button onClick={() => navigate("/profile/admin")} className='back-button'>
+                        <img src={setingsSvg}/>
+                    </button>
 
                 </form>
             </div>

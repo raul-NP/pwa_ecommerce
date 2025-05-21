@@ -87,20 +87,3 @@
     left: 29vw;
     bottom: -2vh;
 }
-
-.create-button{
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 4.5vh;
-    width: 4.5vh;
-    border-radius: 50%;
-    bottom: 2vh;
-    font-size: 4vh;
-    color: var(--tertiary);
-    border: 0.3vh solid var(--tertiary);
-    background-color: var(--secondary);
-    bottom: -2vh;
-    right: 19vw;
-}

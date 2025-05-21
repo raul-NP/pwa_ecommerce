@@ -11,6 +11,7 @@ import Modal from '../Modal/Modal';
 // Funcionalidad
 import { useEffect, useState } from 'react';
 import { checkPassword, getCurrentUser, updateUser } from '../../services/api_service';
+import { useNavigate } from 'react-router-dom';
 
 // Imagenes
 import passwordSvg from '../../assets/imgs/password.svg';
@@ -24,6 +25,7 @@ function ChangePassword() {
     const [password, setPassword] = useState(null)
     const [newPassword, setNewPassword] = useState(null)
     const [confirmNewPassword, setConfirmNewPassword] = useState(null)
+    const navigate = useNavigate()
 
     // Modales
     const [passwordModal, setPasswordModal] = useState(false)
@@ -94,11 +96,15 @@ function ChangePassword() {
                     return
                 }
 
+                // Vaciamos el formulario
+                setPassword("")
+                setNewPassword("")
+                setConfirmNewPassword("")
+
                 // Modal de aviso
                 setSuccessChangeModal(true)
                 setTimeout( () => {
                     setSuccessChangeModal(false)
-                    window.location.reload()
                 }, 2000)
             }
         }
@@ -127,17 +133,17 @@ function ChangePassword() {
 
                     {/* Contraseña actual del usuario */}
                     <div className='input-container'>
-                        <PasswordInput onChange={ (e) => {setPassword(e.target.value)} } srcPassword={passwordSvg} placeholder={'Last Password'}></PasswordInput>
+                        <PasswordInput value={password} onChange={ (e) => {setPassword(e.target.value)} } srcPassword={passwordSvg} placeholder={'Last Password'}></PasswordInput>
                     </div>
 
                     {/* Nueva contraseña */}
                     <div className='input-container'>
-                        <PasswordInput onChange={ (e) => {setNewPassword(e.target.value)} } srcPassword={password2Svg} placeholder={'New Password'}></PasswordInput>
+                        <PasswordInput value={newPassword} onChange={ (e) => {setNewPassword(e.target.value)} } srcPassword={password2Svg} placeholder={'New Password'}></PasswordInput>
                     </div>
 
                     {/* Confirmar nueva contraseña */}
                     <div className='input-container'>
-                        <PasswordInput onChange={ (e) => {setConfirmNewPassword(e.target.value)} } srcPassword={password2Svg} placeholder={'Confirm New Password'}></PasswordInput>
+                        <PasswordInput value={confirmNewPassword} onChange={ (e) => {setConfirmNewPassword(e.target.value)} } srcPassword={password2Svg} placeholder={'Confirm New Password'}></PasswordInput>
                     </div>
 
                     {/* Boton de cambio de contraseña */}

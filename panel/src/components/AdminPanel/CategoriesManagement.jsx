@@ -11,11 +11,13 @@ import ModalConfirm from '../Modal/ModalConfirm';
 // Funcionalidad
 import { useEffect, useState } from 'react';
 import { getCurrentUser, getCategories, createCategory, updateCategory, deleteCategory } from '../../services/api_service';
+import { useNavigate } from 'react-router-dom';
 
 // Imágenes
 import editSvg from '../../assets/imgs/edit.svg';
 import trashSvg from '../../assets/imgs/trash.svg';
 import categorySvg from '../../assets/imgs/category.svg';
+import setingsSvg from '../../assets/imgs/settings.svg';
 
 function CategoriesManagement() {
 
@@ -24,6 +26,7 @@ function CategoriesManagement() {
     const [editMode, setEditMode] = useState(false);
     const [editName, setEditName] = useState("");
     const [originalName, setOriginalName] = useState("");
+    const navigate = useNavigate()
 
     // Modales
     const [processingModal, setProcessingModal] = useState(false)
@@ -254,7 +257,13 @@ function CategoriesManagement() {
                     {editMode &&
                         <button onClick={createNewCategory} className='create-button'>+</button>
                     }
+                    
+                    {/* Botón para volver al panel de administrador */}
+                    <button onClick={() => navigate("/profile/admin")} className='back-button'>
+                        <img src={setingsSvg}/>
+                    </button>
                 </form>
+
             </div>
 
             {/* Footer general de la aplicación */}

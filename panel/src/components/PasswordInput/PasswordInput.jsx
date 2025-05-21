@@ -6,7 +6,7 @@ import closeEye from '../../assets/imgs/closeEye.svg';
 import { useState } from 'react';
 
 // Botón genérico para toda la aplicación
-function PasswordInput ({ onChange, srcPassword, placeholder }){
+function PasswordInput ({ value, onChange, srcPassword, placeholder }){
     
     const [visiblePassword, setVisiblePassword] = useState(false)
     const passwordType = visiblePassword ? 'text': 'password'; 
@@ -20,7 +20,7 @@ function PasswordInput ({ onChange, srcPassword, placeholder }){
     return (
         <>
             <img id='password' src={srcPassword}/>
-            <input onChange={ onChange } className='inputs' type={passwordType} placeholder={placeholder} maxLength={15} required/>
+            <input value={value} onChange={ onChange } className='inputs' type={passwordType} placeholder={placeholder} maxLength={15} required/>
             <img onClick={handleClick} id='view' src={passwordViewImage}/>
         </>
     )

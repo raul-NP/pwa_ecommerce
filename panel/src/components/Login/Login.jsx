@@ -37,6 +37,7 @@ function Login ({signIn}) {
     const [successModal, setSuccessModal] = useState(false)
     const [incorrectModal, setIncorrectModal] = useState(false)
     const [charsModal, setCharsModal] = useState(false)
+    const [fewCharsModal, setFewCharsModal] = useState(false)
 
     // Función para comprobar si el nombre de usuario contiene solo letras
     function haveOnlyLetters(userName) {
@@ -94,7 +95,16 @@ function Login ({signIn}) {
                     setTimeout( () => {
                         setExistModal(false)
                     }, 2000)
-                    
+                  
+                // Caso en el que el usuario tiene solo un caracter
+                }else if (user.length < 2){
+
+                    // Modal de aviso
+                    setFewCharsModal(true)
+                    setTimeout( () => {
+                        setFewCharsModal(false)
+                    }, 2000)
+                  
                 // Registro con éxito
                 }else{
                     
@@ -152,6 +162,7 @@ function Login ({signIn}) {
             { existModal && <Modal text={'A user with that name already exists.'} type={'cross'}></Modal>}
             { successModal && <Modal text={'User successfully registered'}></Modal>}
             { incorrectModal && <Modal text={'Incorrect username or password'} type={'cross'}></Modal>}
+            { fewCharsModal && <Modal text={'The username must have more than one character'} type={'cross'}></Modal>}
 
             {/* Título */}
             <div className='header'>
@@ -173,7 +184,7 @@ function Login ({signIn}) {
                     {/* Usuario */}
                     <div className='input-container'>
                         <img id='user' src={userSvg}/>
-                        <input onChange={ (e) => {setUser(e.target.value)} } className='inputs' type="text" placeholder='Username' maxLength={20} required/>
+                        <input onChange={ (e) => {setUser(e.target.value)} } className='inputs' type="text" placeholder='Username' minLength={2} maxLength={20} required/>
                     </div>
 
                     {/* Contraseña */}
@@ -192,7 +203,6 @@ function Login ({signIn}) {
                 {/* Enlaces para navegar entre páginas del login */}
                 {signIn && <a onClick={() => navigate("/signUp")}>Sign up</a>}
                 {!signIn && <a onClick={() => navigate("/")}>Sign in</a>}
-                
 
                 {/* Botón acceso o signUp*/}
                 <div className='button'>

@@ -94,13 +94,33 @@
     justify-content: center;
     align-items: center;
     height: 4.5vh;
-    width: 4.5vh;
-    border-radius: 50%;
+    width: 10vh;
+    border-radius: 1vh;
     bottom: 2vh;
     font-size: 4vh;
     color: var(--tertiary);
     border: 0.3vh solid var(--tertiary);
     background-color: var(--secondary);
     bottom: -2vh;
-    right: 19vw;
+    right: 2.5vh;
+}
+
+.back-button{
+    background-color: var(--secondary);
+    border: none;
+    border: 0.3vh solid var(--tertiary);
+    border-radius: 1vh;
+    position: absolute;
+    bottom: -2vh;
+    left: 2vh;
+    height: 4.5vh;
+    width: 10vh;
+    color: var(--tertiary);
+    font-size: 2.2vh;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-style: italic;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

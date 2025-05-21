@@ -11,6 +11,7 @@ import ModalConfirm from '../Modal/ModalConfirm';
 // Funcionalidad
 import { useEffect, useState } from 'react';
 import { deleteUser, getCurrentUser, getUsers, registerUser, updateUser } from '../../services/api_service';
+import { useNavigate } from 'react-router-dom';
 
 // Imágenes
 import eyeSvg from '../../assets/imgs/eye.svg';
@@ -18,6 +19,7 @@ import closeEyeSvg from '../../assets/imgs/closeEye.svg';
 import userSvg from '../../assets/imgs/user.svg';
 import trashSvg from '../../assets/imgs/trash.svg';
 import editSvg from '../../assets/imgs/edit.svg';
+import setingsSvg from '../../assets/imgs/settings.svg';
 
 // Página de login donde el usuario inicia sesión
 function UserManagement() {
@@ -31,6 +33,7 @@ function UserManagement() {
     const [editPoints, setEditPoints] = useState("")
     const [editMode, setEditMode] = useState(false)
     const [seePassword, setSeePassword] = useState(false)
+    const navigate = useNavigate()
 
     // Modales
     const [processingModal, setProcessingModal] = useState(false)
@@ -264,10 +267,10 @@ function UserManagement() {
                 <form className='admin-users-controller'>
 
                     <div className='div-input-controller'>
-                        <input className='input-controller' value={editUsername} onChange={(e) => setEditUsername(e.target.value)} type="text" placeholder='Username' required/>
+                        <input className='input-controller' value={editUsername} onChange={(e) => setEditUsername(e.target.value)} minLength={2} maxLength={20} type="text" placeholder='Username' required/>
                     </div>
                     <div className='div-input-controller'>
-                        <input className='input-controller' value={editPassword} onChange={(e) => setEditPassword(e.target.value)} type={seePassword ? "text" : "password"} placeholder='Password' {...(!editMode ? { required: true } : {})}/>
+                        <input className='input-controller' value={editPassword} onChange={(e) => setEditPassword(e.target.value)} maxLength={15} type={seePassword ? "text" : "password"} placeholder='Password' {...(!editMode ? { required: true } : {})}/>
                         <img onClick={() => setSeePassword(!seePassword)} src={seePassword ? eyeSvg : closeEyeSvg}/>
                     </div>
                     <div className='div-input-controller'>
@@ -282,13 +285,18 @@ function UserManagement() {
                     </div>
 
                     {/* Botón de la acción de crear o editar un usuario */}
-                    <Button className={'management-button'} onClick={handleSubmit} width={'34vw'} height={'4.5vh'} text={editMode ? "Edit" : "Create"} borderWidth={'0.3vh'} borderColor={'var(--tertiary)'}></Button>
+                    <Button className={'management-button'} onClick={handleSubmit} width={'34vw'} height={'4.5vh'} text={editMode ? "Confirm" : "Create"} borderWidth={'0.3vh'} borderColor={'var(--tertiary)'}></Button>
                     
                     {/* Botón de volver a la creación de usuario si estamos editando un usuario */}
                     {editMode && 
                         <button onClick={createUser} className='create-button'>+</button>
                     }
 
+
+                    {/* Botón para volver al panel de administrador */}
+                    <button type="button" onClick={() => navigate("/profile/admin")} className='back-button'>
+                        <img src={setingsSvg}/>
+                    </button>
                 </form>
             </div>
 
