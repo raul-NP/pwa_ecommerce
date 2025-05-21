@@ -5,7 +5,7 @@ USE pwa_ecommerce;
 -- Tabla de usuarios
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
+    name VARCHAR(100) NOT NULL UNIQUE,
     password VARCHAR(250) NOT NULL,
     rol VARCHAR(50) NOT NULL,
     points INT DEFAULT 0,
@@ -22,20 +22,20 @@ CREATE TABLE carts (
 -- Tabla de categorías
 CREATE TABLE categories (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL
+    name VARCHAR(100) NOT NULL UNIQUE
 );
 
 -- Tabla de productos
 CREATE TABLE products (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
+    name VARCHAR(100) NOT NULL UNIQUE,
     price FLOAT NOT NULL,
     stock INT NOT NULL,
     url_image VARCHAR(255),
     description VARCHAR(250)
 );
 
--- Tabla intermedia productos-categorías (PK compuesta)
+-- Tabla intermedia productos-categorías
 CREATE TABLE product_categories (
     id_product INT NOT NULL,
     id_category INT NOT NULL,
@@ -44,7 +44,7 @@ CREATE TABLE product_categories (
     FOREIGN KEY (id_category) REFERENCES categories(id) ON DELETE CASCADE
 );
 
--- Tabla intermedia productos en el carrito (PK compuesta)
+-- Tabla intermedia productos en el carrito 
 CREATE TABLE cart_products (
     id_product INT NOT NULL,
     id_cart INT NOT NULL,
@@ -66,7 +66,7 @@ CREATE TABLE orders (
     FOREIGN KEY (id_user) REFERENCES users(id) ON DELETE CASCADE
 );
 
--- Tabla intermedia productos en el pedido (PK compuesta)
+-- Tabla intermedia productos en el pedido
 CREATE TABLE order_products (
     id_product INT NOT NULL,
     id_order INT NOT NULL,
