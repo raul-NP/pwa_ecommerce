@@ -1,18 +1,7 @@
-EN CASO DE LANZAR CON MAQUINA VIRTUAL: EXPONER EL PUERTO PARA QUE SEA HTTPS
-    - Iniciar sesión en ngrok y copìar el authtoken
-    - ngrok http 3000
-    - Otra opción: npm run preview
-
-SCRIPT RÁPIDO PARA LEVANTAR DB Y API
-    - docker compose down -v && docker image prune -af && docker compose up -d --build api db
-
-TAREAS
-    - Crear carrito al crear usuario
-    - Crear ruta para ver si esta un producto en una categoria
-    - vista carrito
-    - Vista ordenes
-    - Vista panel admin
-    - Vista producto
-    - Expiracion de token
-    - Cambiar lógica de favoritos
-    - Cambiar a produccion todo, en docker compose
+SUBIR A PRODUCCION:
+    - Instalar cludfyre
+    - cloudflared tunnel --protocol http2 --url http://localhost:5000
+    - Copiar url en el .env del front
+    - docker compose build panel
+    - docker compose up -d panel
+    - cloudflared tunnel --protocol http2 --url http://localhost:3000
