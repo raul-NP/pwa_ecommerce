@@ -121,6 +121,7 @@ a{
     bottom: 22vh;
     font-size: 1.7vh;
     letter-spacing: 0.075vh;
+    text-decoration: underline;
 }
 
 .button{
